@@ -25,8 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="codigo"
-        android:inputType="textPersonName"
+        android:hint="correo universitario"
+        android:inputType="textEmailAddress"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/txt_login_password"
         tools:layout_constraintLeft_creator="1"
@@ -98,6 +98,7 @@
 
     <Button
         android:id="@+id/btn_push_user"
+        android:enabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="push user"
