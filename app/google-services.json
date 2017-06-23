@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "717716205212",
+    "firebase_url": "https://helpu-66213.firebaseio.com",
+    "project_id": "helpu-66213",
+    "storage_bucket": "helpu-66213.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717716205212:android:d4504137f7642988",
+        "android_client_info": {
+          "package_name": "com.sgp95.santiago.helpu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717716205212-hn9arjasatpmshn5qaia5kpj8drs6h5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW1oyzhBial5fvJly1bRufA3k1yZ1W_lc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

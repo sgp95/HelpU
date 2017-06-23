@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/opt_comments"
+            android:checked="true"
+            android:title="Inicio"
+            android:icon="@drawable/ic_comment"/>
+        <item
+            android:id="@+id/opt_make_complain"
+            android:title="Crear Solicitud"
+            android:icon="@drawable/ic_info_contacts"/>
+        <item
+            android:id="@+id/opt_history"
+            android:title="Historial"
+            android:icon="@drawable/ic_contacts"/>
+        <item
+            android:id="@+id/opt_exit"
+            android:title="Salir"
+            android:icon="@drawable/ic_comment"/>
+
+    </group>
+
+</menu>
