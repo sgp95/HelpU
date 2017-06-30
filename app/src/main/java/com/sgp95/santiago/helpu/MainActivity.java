@@ -31,6 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = auth.getCurrentUser();
+                if(user == null){
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    finish();
+                }
+            }
+        };
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -56,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
                         authStateListener = new FirebaseAuth.AuthStateListener() {
                             @Override
                             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                if(user == null){
+                                FirebaseUser user = auth.getCurrentUser();
+                                //Log.d("MainActivity",user+"");
+                                if(auth == null){
                                     startActivity(new Intent(MainActivity.this,LoginActivity.class));
                                     finish();
                                 }
                             }
                         };
-                        //Log.d("MainActivity","Option Selected: "+item.getTitle());
+                        //Log.d("MainActivity",auth.getCurrentUser()+"");
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
