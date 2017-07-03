@@ -8,17 +8,19 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_width="281dp"
+        android:layout_height="123dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="79dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/utp_logo"
+        app:srcCompat="@drawable/utp"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintHorizontal_bias="0.504" />
 
     <EditText
         android:id="@+id/txt_login_code"
@@ -65,7 +67,6 @@
         android:layout_width="40dp"
         android:layout_height="44dp"
         app:srcCompat="@drawable/ic_login_pass"
-        app:layout_constraintRight_toLeftOf="@+id/btn_push_user"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
@@ -82,30 +83,16 @@
         android:id="@+id/btn_login"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:background="@android:color/holo_green_dark"
+        android:background="@android:color/darker_gray"
         android:text="Ingresar"
         android:textAllCaps="false"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_push_user"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="78dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="77dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_login_password" />
 
-    <Button
-        android:id="@+id/btn_push_user"
-        android:enabled="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="push user"
-        android:layout_marginEnd="6dp"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/btn_login"
-        android:layout_marginBottom="19dp" />
 </android.support.constraint.ConstraintLayout>

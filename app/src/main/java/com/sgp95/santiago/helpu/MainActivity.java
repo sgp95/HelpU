@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private  CommentsFragment commentsFragment;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
+    private ImageView imageuser;
+    FirebaseUser user;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -42,11 +48,21 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+       /*  */
+
+       //set drawer and navigation
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
 
+        //get views from header
+        View view = navigationView.getHeaderView(0);
+        imageuser = (ImageView) view.findViewById(R.id.user_profile_img);
+        TextView userCode = (TextView) view.findViewById(R.id.user_code_header);
+        TextView userFullName = (TextView) view.findViewById(R.id.user_name_header);
+        imageuser.setImageResource(R.drawable.burger);
+        userCode.setText(user.getEmail().substring(0,7));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -63,27 +79,21 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("MainActivity","Option Selected: "+item.getTitle());
                         break;
                     case R.id.opt_exit:
+
                         auth.signOut();
-                        authStateListener = new FirebaseAuth.AuthStateListener() {
-                            @Override
-                            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                FirebaseUser user = auth.getCurrentUser();
-                                //Log.d("MainActivity",user+"");
-                                if(auth == null){
-                                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
-                                    finish();
-                                }
-                            }
-                        };
-                        //Log.d("MainActivity",auth.getCurrentUser()+"");
+                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                        finish();
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
+        Bundle data = new Bundle();
+        data.putString("userCode", user.getEmail().substring(0,7));
         commentsFragment = new CommentsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        commentsFragment.setArguments(data);
         ft.add(R.id.content, commentsFragment);
         ft.commit();
 
@@ -96,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     public void showFragment(){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

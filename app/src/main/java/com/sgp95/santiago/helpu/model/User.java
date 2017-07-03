@@ -6,21 +6,49 @@ package com.sgp95.santiago.helpu.model;
 
 public class User {
 
-    public String userCode;
-    public String userPassword;
+    private String Email;
+    private String FirstName;
+    private String Image;
+    private String LastName;
 
     public User(){}
 
-    public User(String userCode, String userPassword) {
-        this.userCode = userCode;
-        this.userPassword = userPassword;
+    public User(String email, String firstName, String image, String lastName) {
+        Email = email;
+        FirstName = firstName;
+        Image = image;
+        LastName = lastName;
     }
 
-    public String getUserCode() {
-        return userCode;
+    public String getImage() {
+        return Image;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        LastName = lastName;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public String getLastName() {
+        return LastName;
     }
 }
