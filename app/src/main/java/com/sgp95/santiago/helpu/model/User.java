@@ -1,8 +1,6 @@
 package com.sgp95.santiago.helpu.model;
 
-/**
- * Created by Hiraoka on 22/06/2017.
- */
+
 
 public class User {
 
