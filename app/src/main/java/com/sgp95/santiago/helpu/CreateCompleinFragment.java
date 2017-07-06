@@ -11,7 +11,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,8 @@ import com.google.firebase.storage.StorageReference;
 import com.sgp95.santiago.helpu.scanner.Scanner;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
@@ -35,11 +39,11 @@ import static android.app.Activity.RESULT_OK;
 public class CreateCompleinFragment extends Fragment {
     EditText edtComplain;
     ImageButton btnPicture;
-    ImageView imgComplain;
+    ImageView imgComplain,photo;
     Button btnSend;
 
     StorageReference storageReference;
-
+    private Uri file;
     private static final String LOG_TAG = "Barcode Scanner API";
     private static final int PHOTO_REQUEST = 10;
     private Uri imageuri;
@@ -65,23 +69,83 @@ public class CreateCompleinFragment extends Fragment {
         edtComplain = (EditText) view.findViewById(R.id.edt_complain);
         btnPicture = (ImageButton) view.findViewById(R.id.btn_picture);
         imgComplain = (ImageView) view.findViewById(R.id.img_photo_camera);
+        photo = (ImageView) view.findViewById(R.id.photo);
         btnSend = (Button) view.findViewById(R.id.btn_send_complain);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
         progressDialog = new ProgressDialog(getActivity());
 
+
+
+
         btnPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    btnPicture.setEnabled(false);
+                    ActivityCompat.requestPermissions(getActivity(), new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+                }else{
+                    takePicture();
+                }
+
+            }
+        });
+
+       /* btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 imgComplain.setImageBitmap(null);
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_PERMISSION);
                 //ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_PERMISSION);
             }
-        });
+        });*/
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                btnPicture.setEnabled(true);
+            }
+        }
+    }
+
+
+    public void takePicture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        file = Uri.fromFile(getOutputMediaFile());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
+
+        startActivityForResult(intent, 100);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                photo.setImageURI(file);
+            }
+        }
+    }
+
+    private static File getOutputMediaFile(){
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "CameraDemo");
+
+        if (!mediaStorageDir.exists()){
+            if (!mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator +
+                "IMG_"+ timeStamp + ".jpg");
+    }
+
+  /*  @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
@@ -96,10 +160,11 @@ public class CreateCompleinFragment extends Fragment {
                     Toast.makeText(getActivity(), "Permission Denied!"+requestCode, Toast.LENGTH_SHORT).show();
                 }
         }
-    }
+    } */
 
-    public void takePicture(){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+  /*   public void takePicture(){
+
+       Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         Random random = new Random();
         int key =random.nextInt(1000);
@@ -107,9 +172,9 @@ public class CreateCompleinFragment extends Fragment {
         imageuri = Uri.fromFile(photo);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,imageuri);
         startActivityForResult(intent,PHOTO_REQUEST);
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PHOTO_REQUEST && resultCode == RESULT_OK){
             launchMediaScanIntent();
@@ -129,5 +194,5 @@ public class CreateCompleinFragment extends Fragment {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         mediaScanIntent.setData(imageuri);
         getActivity().sendBroadcast(mediaScanIntent);
-    }
+    }*/
 }
