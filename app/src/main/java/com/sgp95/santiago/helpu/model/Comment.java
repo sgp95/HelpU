@@ -5,26 +5,19 @@ package com.sgp95.santiago.helpu.model;
  */
 
 public class Comment {
-    private Long id;
-    private String username;
     private String Complain;
-    private String date;
-    private String solution;
+    private String ComplainImage;
+    private String ComplaintId;
+    private String DateCreated;
+    private String UserCode;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public Comment(){}
+    public Comment(String complain, String complainImage, String complaintId, String dateCreated, String userCode) {
+        Complain = complain;
+        ComplainImage = complainImage;
+        ComplaintId = complaintId;
+        DateCreated = dateCreated;
+        UserCode = userCode;
     }
 
     public String getComplain() {
@@ -35,19 +28,35 @@ public class Comment {
         Complain = complain;
     }
 
-    public String getDate() {
-        return date;
+    public String getComplainImage() {
+        return ComplainImage;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setComplainImage(String complainImage) {
+        ComplainImage = complainImage;
     }
 
-    public String getSolution() {
-        return solution;
+    public String getComplaintId() {
+        return ComplaintId;
     }
 
-    public void setSolution(String solution) {
-        this.solution = solution;
+    public void setComplaintId(String complaintId) {
+        ComplaintId = complaintId;
+    }
+
+    public String getDateCreated() {
+        return DateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        DateCreated = dateCreated;
+    }
+
+    public String getUserCode() {
+        return UserCode;
+    }
+
+    public void setUserCode(String userCode) {
+        UserCode = userCode;
     }
 }

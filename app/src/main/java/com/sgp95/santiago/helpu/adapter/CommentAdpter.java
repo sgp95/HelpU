@@ -1,5 +1,6 @@
 package com.sgp95.santiago.helpu.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,12 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
     private MyItemClickListener myItemClickListener;
     private List<Comment> commentList;
+    private Context context;
 
-    public CommentAdpter(RecyclerView recyclerView,List<Comment> commentList){
+    public CommentAdpter(RecyclerView recyclerView, List<Comment> commentList, Context context){
         super(recyclerView);
         this.commentList = commentList;
+        this.context = context;
     }
 
 
@@ -47,16 +50,16 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
     public class ViewHolder extends SelectableAdapter.ViewHolder {
 
-        TextView userName, complain, date, solution;
-        ImageView imgUser;
+        TextView userCode, complain, dateCreated;
+        ImageView imgUser,imgRequest;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            userName = (TextView) itemView.findViewById(R.id.txt_Name_user);
-            complain = (TextView) itemView.findViewById(R.id.txt_Complain);
-            date = (TextView) itemView.findViewById(R.id.txt_date_created);
-            solution = (TextView) itemView.findViewById(R.id.txt_solution_area);
+            userCode = (TextView) itemView.findViewById(R.id.txt_code_user);
+            complain = (TextView) itemView.findViewById(R.id.txt_complaint_area);
+            dateCreated = (TextView) itemView.findViewById(R.id.txt_date_created);
             imgUser = (ImageView) itemView.findViewById(R.id.img_user);
+            imgRequest = (ImageView) itemView.findViewById(R.id.img_complaint);
             setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick() {
@@ -79,15 +82,19 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
         */
 
         public void bind(Comment comment){
-            userName.setText(comment.getUsername());
+            userCode.setText(comment.getUserCode());
             complain.setText(comment.getComplain());
-            date.setText(comment.getDate());
-            solution.setText(comment.getSolution());
-
+            dateCreated.setText(comment.getDateCreated());
+            /*
+            Picasso.with(context)
+                    .load(comment.getComplainImage())
+                    .into(imgRequest);
+            */
         }
     }
 
     public interface MyItemClickListener {
         void onItemClick(Comment comment);
     }
+
 }

@@ -2,7 +2,6 @@ package com.sgp95.santiago.helpu;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +32,7 @@ import java.util.List;
 public class CommentsFragment extends Fragment {
     private RecyclerView recyclerView;
     private CommentAdpter commentAdpter;
-    List<Comment> commentList;
+    private List<Comment> complaintList;
     //private NavigationView navigationView;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
@@ -57,12 +56,17 @@ public class CommentsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
-        mFirebaseDatabase = mFirebaseInstance.getReference("student");
+        //Firebase Reference, work with this
+        mFirebaseDatabase = mFirebaseInstance.getReference();
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_comment);
+        complaintList = new ArrayList<>();
 
         String userCode = getArguments().getString("userCode");
         Log.d("prueba", userCode);
 
-        mFirebaseDatabase.child(userCode).addValueEventListener(new ValueEventListener() {
+
+        mFirebaseDatabase.child("student").child(userCode).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -82,27 +86,22 @@ public class CommentsFragment extends Fragment {
             }
         });
 
-
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_comment);
-
-        commentList = new ArrayList<>();
+        /*
         for (int i =0;i<6; i++){
             Comment comment = new Comment();
-            comment.setId((long) i);
-            comment.setUsername("User #"+i);
+            comment.setComplaintId("edddddd");
+            comment.setUserCode("142000"+i);
             comment.setComplain("Complain #"+i);
-            comment.setDate("Day "+i+" 24:00");
-            comment.setSolution("Esta es la solucion de prueba #"+i);
+            comment.setDateCreated("Day "+i+" 24:00");
+            comment.setComplainImage("www.img.com");
             commentList.add(comment);
         }
+        */
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        commentAdpter = new CommentAdpter(recyclerView,commentList);
+        commentAdpter = new CommentAdpter(recyclerView,complaintList,getContext());
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(commentAdpter);
-        commentAdpter.notifyDataSetChanged();
-
+        //commentAdpter.notifyDataSetChanged();
     }
 }

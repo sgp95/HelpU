@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/txt_prueba"
         android:id="@+id/recycler_view_comment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
