@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sgp95.santiago.helpu.R;
-import com.sgp95.santiago.helpu.model.Comment;
+import com.sgp95.santiago.helpu.model.Complain;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -17,12 +18,12 @@ import java.util.List;
 public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
     private MyItemClickListener myItemClickListener;
-    private List<Comment> commentList;
+    private List<Complain> complainList;
     private Context context;
 
-    public CommentAdpter(RecyclerView recyclerView, List<Comment> commentList, Context context){
+    public CommentAdpter(RecyclerView recyclerView, List<Complain> complainList, Context context){
         super(recyclerView);
-        this.commentList = commentList;
+        this.complainList = complainList;
         this.context = context;
     }
 
@@ -36,12 +37,12 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(commentList.get(position));
+        holder.bind(complainList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return commentList.size();
+        return complainList.size();
     }
 
     public void setOnItemClickListener(MyItemClickListener listener) {
@@ -60,41 +61,24 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
             dateCreated = (TextView) itemView.findViewById(R.id.txt_date_created);
             imgUser = (ImageView) itemView.findViewById(R.id.img_user);
             imgRequest = (ImageView) itemView.findViewById(R.id.img_complaint);
-            setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick() {
-                    if(myItemClickListener != null){
-                        myItemClickListener.onItemClick(commentList.get(getAdapterPosition()));
-                    }
-                }
-            });
+
         }
 
-        /*
-        public ViewHolder(View itemView) {
-            super(itemView);
-            userName = (TextView) itemView.findViewById(R.id.txt_Name_user);
-            complain = (TextView) itemView.findViewById(R.id.txt_Complain);
-            date = (TextView) itemView.findViewById(R.id.txt_date_created);
-            solution = (TextView) itemView.findViewById(R.id.txt_solution_area);
-            imgUser = (ImageView) itemView.findViewById(R.id.img_user);
-        }
-        */
+        public void bind(Complain comment){
 
-        public void bind(Comment comment){
-            userCode.setText(comment.getUserCode());
-            complain.setText(comment.getComplain());
-            dateCreated.setText(comment.getDateCreated());
-            /*
+
             Picasso.with(context)
                     .load(comment.getComplainImage())
                     .into(imgRequest);
-            */
+
+            userCode.setText(comment.getUserCode());
+            complain.setText(comment.getComplain());
+            dateCreated.setText(comment.getDateCreated());
         }
     }
 
     public interface MyItemClickListener {
-        void onItemClick(Comment comment);
+        void onItemClick(Complain complein);
     }
 
 }

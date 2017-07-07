@@ -13,26 +13,35 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.sgp95.santiago.helpu.model.Comment;
+import com.sgp95.santiago.helpu.adapter.SpinnerAdapter;
+import com.sgp95.santiago.helpu.model.Category;
+import com.sgp95.santiago.helpu.model.Complain;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -43,12 +52,17 @@ public class CreateCompleinFragment extends Fragment {
     ImageView imgComplain;
     Button btnSend;
     Switch swtPrivacy;
+    Spinner spnCategorias;
 
     private String complainImgUrl,userCode;
-
+    private FirebaseDatabase mFirebaseInstance;
     StorageReference storageReference;
-    DatabaseReference databaseReference,complainRef,commentRef;
+    DatabaseReference databaseReference,complainRef,commentRef,categoyRef;
     ProgressDialog progressDialog;
+    DatabaseReference db;
+    SpinnerAdapter helper;
+    List<String> categories = null;
+    ArrayAdapter<String> spnArrayAdapter;
     private static final int PICK_IMAGE_REQUEST = 20;
     //private static final int REQUEST_WRITE_PERMISSION = 21;
     private static final String COMPLAIN_STATE = "Pendiente";
@@ -74,6 +88,7 @@ public class CreateCompleinFragment extends Fragment {
         imgComplain = (ImageView) view.findViewById(R.id.img_photo);
         btnSend = (Button) view.findViewById(R.id.btn_send_complain);
         swtPrivacy = (Switch) view.findViewById(R.id.swt_privacy);
+        spnCategorias = (Spinner) view.findViewById(R.id.spnCategorias);
         swtPrivacy.setChecked(true);
 
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -86,6 +101,7 @@ public class CreateCompleinFragment extends Fragment {
 
         TextView textView = (TextView) getActivity().findViewById(R.id.user_code_header);
         userCode = textView.getText().toString();
+
 
         swtPrivacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -115,6 +131,67 @@ public class CreateCompleinFragment extends Fragment {
             }
         });
 
+
+       /* final DatabaseReference dinosaursRef = databaseReference.getRef("dinosaurs");
+        dinosaursRef.orderByChild("height").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                DataSnapshot categorySnapshot = dataSnapshot.child("category");
+                Iterable<DataSnapshot> categoryChildren = categorySnapshot.getChildren();
+                ArrayList<Category> categories = new ArrayList<>();
+                for(DataSnapshot category: categoryChildren){
+                    Category c = category.getValue(Category.class);
+                    categories.add(c);
+                    Log.e("spn",c + "e");
+                }
+                ArrayAdapter<String> spnArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
+                spnArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnCategorias.setAdapter(spnArrayAdapter);
+            }
+
+            // ...
+        }); */
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("category");
+        categories = new ArrayList<>();
+        ref.orderByChild("name").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Category category = dataSnapshot.getValue(Category.class);
+               // System.out.println(dataSnapshot.getKey() + " was " + category.getName());
+                categories.add(category.getName());
+               // System.out.println(categories);
+                    spnArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,categories);
+                    spnArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnCategorias.setAdapter(spnArrayAdapter);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+            // ...
+        });
+
+
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +207,7 @@ public class CreateCompleinFragment extends Fragment {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             @SuppressWarnings("VisibleForTests") Uri imgUrl = taskSnapshot.getDownloadUrl();
                             complainImgUrl = imgUrl.toString();
-                            Comment comment = new Comment();
+                            Complain comment = new Complain();
                             comment.setComplain(edtComplain.getText().toString());
                             comment.setComplainImage(complainImgUrl);
                             comment.setComplaintId(pushKey);
@@ -138,6 +215,7 @@ public class CreateCompleinFragment extends Fragment {
                             comment.setUserCode(userCode);
                             comment.setState(COMPLAIN_STATE);
                             comment.setPrivacy(getPrivacyState());
+                            comment.setCategory(spnCategorias.getSelectedItem().toString());
 
                             complainRef.child(pushKey).setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -158,7 +236,7 @@ public class CreateCompleinFragment extends Fragment {
                     Log.d("push", pushKey);
                 }
                 else {
-                    Log.e("filePath","filePath vacio -->"+filePath.toString());
+                    Log.e("filePath","filePath vacio");
                 }
             }
         });

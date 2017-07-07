@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         imageuser = (ImageView) view.findViewById(R.id.user_profile_img);
         TextView userCode = (TextView) view.findViewById(R.id.user_code_header);
         TextView userFullName = (TextView) view.findViewById(R.id.user_name_header);
-        imageuser.setImageResource(R.drawable.burger);
         userCode.setText(user.getEmail().substring(0,7));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

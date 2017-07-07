@@ -1,83 +1,53 @@
 package com.sgp95.santiago.helpu.model;
 
 /**
- * Created by Hiraoka on 16/06/2017.
+ * Created by GRLIMA on 07/07/2017.
  */
 
 public class Comment {
-    private String Complain;
-    private String ComplainImage;
-    private String ComplaintId;
-    private String DateCreated;
-    private String UserCode;
-    private String Privacy;
-    private String State;
+    private String ID;
+    private String Username;
+    private String Comment;
+    private String image;
+
+    public Comment(String ID, String username, String comment, String image) {
+        this.ID = ID;
+        Username = username;
+        Comment = comment;
+        this.image = image;
+    }
 
     public Comment(){}
-    public Comment(String complain, String complainImage, String complaintId,
-                   String dateCreated, String userCode, String privacy, String state) {
-        Complain = complain;
-        ComplainImage = complainImage;
-        ComplaintId = complaintId;
-        DateCreated = dateCreated;
-        UserCode = userCode;
-        Privacy = privacy;
-        State = state;
+
+    public String getID() {
+        return ID;
     }
 
-    public String getComplain() {
-        return Complain;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
-    public void setComplain(String complain) {
-        Complain = complain;
+    public String getUsername() {
+        return Username;
     }
 
-    public String getComplainImage() {
-        return ComplainImage;
+    public void setUsername(String username) {
+        Username = username;
     }
 
-    public void setComplainImage(String complainImage) {
-        ComplainImage = complainImage;
+    public String getComment() {
+        return Comment;
     }
 
-    public String getComplaintId() {
-        return ComplaintId;
+    public void setComment(String comment) {
+        Comment = comment;
     }
 
-    public void setComplaintId(String complaintId) {
-        ComplaintId = complaintId;
+    public String getImage() {
+        return image;
     }
 
-    public String getDateCreated() {
-        return DateCreated;
-    }
-
-    public void setDateCreated(String dateCreated) {
-        DateCreated = dateCreated;
-    }
-
-    public String getUserCode() {
-        return UserCode;
-    }
-
-    public void setUserCode(String userCode) {
-        UserCode = userCode;
-    }
-
-    public String getPrivacy() {
-        return Privacy;
-    }
-
-    public void setPrivacy(String privacy) {
-        Privacy = privacy;
-    }
-
-    public String getState() {
-        return State;
-    }
-
-    public void setState(String state) {
-        State = state;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
