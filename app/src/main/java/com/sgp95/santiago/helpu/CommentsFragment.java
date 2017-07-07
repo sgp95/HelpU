@@ -87,10 +87,10 @@ public class CommentsFragment extends Fragment {
         });
 
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("complaint");
+        //final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //DatabaseReference ref = database.getReference("complaint");
         complaintList = new ArrayList<>();
-        ref.orderByChild("category").addChildEventListener(new ChildEventListener() {
+        mFirebaseDatabase.child("complaint").orderByChild("category").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Complain complain = dataSnapshot.getValue(Complain.class);

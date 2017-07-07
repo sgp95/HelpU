@@ -66,14 +66,17 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
         public void bind(Complain comment){
 
-
-            Picasso.with(context)
-                    .load(comment.getComplainImage())
-                    .into(imgRequest);
+            if(!comment.getComplainImage().equals("null")) {
+                Picasso.with(context)
+                        .load(comment.getComplainImage())
+                        .into(imgRequest);
+                imgRequest.setVisibility(View.VISIBLE);
+            }
 
             userCode.setText(comment.getUserCode());
             complain.setText(comment.getComplain());
             dateCreated.setText(comment.getDateCreated());
+
         }
     }
 
