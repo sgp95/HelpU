@@ -14,10 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,6 +42,7 @@ public class CreateCompleinFragment extends Fragment {
     ImageButton btnPicture;
     ImageView imgComplain;
     Button btnSend;
+    Switch swtPrivacy;
 
     private String complainImgUrl,userCode;
 
@@ -46,7 +50,8 @@ public class CreateCompleinFragment extends Fragment {
     DatabaseReference databaseReference,complainRef,commentRef;
     ProgressDialog progressDialog;
     private static final int PICK_IMAGE_REQUEST = 20;
-    private static final int REQUEST_WRITE_PERMISSION = 21;
+    //private static final int REQUEST_WRITE_PERMISSION = 21;
+    private static final String COMPLAIN_STATE = "Pendiente";
     Uri filePath;
     String pushKey;
 
@@ -68,17 +73,33 @@ public class CreateCompleinFragment extends Fragment {
         btnPicture = (ImageButton) view.findViewById(R.id.btn_picture);
         imgComplain = (ImageView) view.findViewById(R.id.img_photo);
         btnSend = (Button) view.findViewById(R.id.btn_send_complain);
+        swtPrivacy = (Switch) view.findViewById(R.id.swt_privacy);
+        swtPrivacy.setChecked(true);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         complainRef = databaseReference.child("complaint");
-        commentRef = databaseReference.child("comment");
+        //commentRef = databaseReference.child("comment");
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Uploading...");
 
         TextView textView = (TextView) getActivity().findViewById(R.id.user_code_header);
         userCode = textView.getText().toString();
+
+        swtPrivacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    swtPrivacy.setText("Publico");
+                    Toast.makeText(getActivity(),"Publico: todos los usuarios veran esta queja",Toast.LENGTH_SHORT).show();
+                }else{
+                    swtPrivacy.setText("Privado");
+                    Toast.makeText(getActivity(),"Privado: solo tu y el administrador podran ver la queja",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
        btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,9 +136,16 @@ public class CreateCompleinFragment extends Fragment {
                             comment.setComplaintId(pushKey);
                             comment.setDateCreated(getDateCreated());
                             comment.setUserCode(userCode);
+                            comment.setState(COMPLAIN_STATE);
+                            comment.setPrivacy(getPrivacyState());
 
-                            complainRef.child(pushKey).setValue(comment);
-                            progressDialog.dismiss();
+                            complainRef.child(pushKey).setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getActivity(),"Queja enviada satisfactoriamente",Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -143,6 +171,17 @@ public class CreateCompleinFragment extends Fragment {
         return date;
     }
 
+    public String getPrivacyState(){
+        String state;
+        if(swtPrivacy.isChecked()){
+            state = "Publico";
+        }
+        else {
+            state = "Privado";
+        }
+        return state;
+
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData()!= null){

@@ -10,14 +10,19 @@ public class Comment {
     private String ComplaintId;
     private String DateCreated;
     private String UserCode;
+    private String Privacy;
+    private String State;
 
     public Comment(){}
-    public Comment(String complain, String complainImage, String complaintId, String dateCreated, String userCode) {
+    public Comment(String complain, String complainImage, String complaintId,
+                   String dateCreated, String userCode, String privacy, String state) {
         Complain = complain;
         ComplainImage = complainImage;
         ComplaintId = complaintId;
         DateCreated = dateCreated;
         UserCode = userCode;
+        Privacy = privacy;
+        State = state;
     }
 
     public String getComplain() {
@@ -58,5 +63,21 @@ public class Comment {
 
     public void setUserCode(String userCode) {
         UserCode = userCode;
+    }
+
+    public String getPrivacy() {
+        return Privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        Privacy = privacy;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
     }
 }
