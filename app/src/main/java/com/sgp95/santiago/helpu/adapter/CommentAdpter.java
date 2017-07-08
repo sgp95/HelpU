@@ -106,7 +106,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
             complain.setText(comment.getComplain());
             dateCreated.setText(comment.getDateCreated().substring(0,11));
-            hour.setText(comment.getDateCreated().substring(12,16));
+            hour.setText(comment.getDateCreated().substring(11,16));
         }
     }
 
