@@ -61,7 +61,7 @@ public class CreateCompleinFragment extends Fragment {
     ProgressDialog progressDialog;
     DatabaseReference db;
     SpinnerAdapter helper;
-    List<String> categories = null;
+    List<String> categories = null,headquarters = null;
     ArrayList<String> sedes;
     ArrayAdapter<String> spnArrayAdapter;
     private static final int PICK_IMAGE_REQUEST = 20;
@@ -117,6 +117,7 @@ public class CreateCompleinFragment extends Fragment {
         });
 
 
+
        btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,8 +131,7 @@ public class CreateCompleinFragment extends Fragment {
             }
         });
 
-        //final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference ref = database.getReference("category");
+
         categories = new ArrayList<>();
         databaseReference.child("category").orderByChild("name").addChildEventListener(new ChildEventListener() {
             @Override
@@ -167,7 +167,43 @@ public class CreateCompleinFragment extends Fragment {
             // ...
         });
 
-        populateSpinnerSedes();
+
+
+        headquarters = new ArrayList<>();
+        databaseReference.child("headquarter").orderByChild("name").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Category category = dataSnapshot.getValue(Category.class);
+                headquarters.add(category.getName());
+                spnArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,headquarters);
+                spnArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnSedes.setAdapter(spnArrayAdapter);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+            // ...
+        });
+
+
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,6 +252,7 @@ public class CreateCompleinFragment extends Fragment {
         comment.setState(COMPLAIN_STATE);
         comment.setPrivacy(getPrivacyState());
         comment.setCategory(spnCategorias.getSelectedItem().toString());
+        comment.setHeadquarter(spnSedes.getSelectedItem().toString());
 
         complainRef.child(pushKey).setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -238,39 +275,6 @@ public class CreateCompleinFragment extends Fragment {
 
     }
 
-    public void populateSpinnerSedes(){
-        sedes = new ArrayList<>();
-        databaseReference.child("sedes").orderByChild("name").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                sedes.add(String.valueOf(dataSnapshot.getValue()));
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,sedes);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spnSedes.setAdapter(adapter);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     public String getDateCreated(){
         Calendar calendar = Calendar.getInstance();

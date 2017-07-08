@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private  CommentsFragment commentsFragment;
     private CreateCompleinFragment createCompleinFragment;
+    private HistoryFragment historyFragment;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private ImageView imageuser;
@@ -83,7 +84,11 @@ public class MainActivity extends AppCompatActivity {
                         //Log.d("MainActivity","Option Selected: "+item.getTitle());
                         break;
                     case R.id.opt_history:
-                        Log.d("MainActivity","Option Selected: "+item.getTitle());
+                        Bundle data2 = new Bundle();
+                        data2.putString("userCode", user.getEmail().substring(0,7));
+                        historyFragment = new HistoryFragment();
+                        historyFragment.setArguments(data2);
+                        showFragment(historyFragment);
                         break;
                     case R.id.opt_exit:
 

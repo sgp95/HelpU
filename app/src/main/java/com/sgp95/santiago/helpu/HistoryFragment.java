@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sgp95.santiago.helpu.adapter.CommentAdpter;
+import com.sgp95.santiago.helpu.adapter.HistoryAdapter;
 import com.sgp95.santiago.helpu.model.Complain;
 import com.sgp95.santiago.helpu.model.User;
 import com.squareup.picasso.Picasso;
@@ -30,14 +31,13 @@ import java.util.List;
  * Created by Hiraoka on 16/06/2017.
  */
 
-public class CommentsFragment extends Fragment {
+public class HistoryFragment extends Fragment {
     private RecyclerView recyclerView;
-    private CommentAdpter commentAdpter;
+    private HistoryAdapter historyAdapter;
     private List<Complain> complaintList;
     //private NavigationView navigationView;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
-
 
 
 
@@ -62,8 +62,7 @@ public class CommentsFragment extends Fragment {
         complaintList = new ArrayList<>();
         final List<Complain> commentList;
 
-        String userCode = getArguments().getString("userCode");
-        Log.d("prueba", userCode);
+        final String userCode = getArguments().getString("userCode");
 
 
         mFirebaseDatabase.child("student").child(userCode).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -95,10 +94,9 @@ public class CommentsFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 Complain complain = dataSnapshot.getValue(Complain.class);
                 // System.out.println(dataSnapshot.getKey() + " was " + category.getName());
+                if(complain.getUserCode().equals(userCode)) {
 
-                if(complain.getPrivacy().equals("Publico")) {
-
-                    final Complain objcomplain = new Complain();
+                    Complain objcomplain = new Complain();
 
                     objcomplain.setCategory(complain.getCategory());
                     objcomplain.setComplain(complain.getComplain());
@@ -108,15 +106,12 @@ public class CommentsFragment extends Fragment {
                     objcomplain.setPrivacy(complain.getPrivacy());
                     objcomplain.setState(complain.getState());
                     objcomplain.setUserCode(complain.getUserCode());
-                    objcomplain.setHeadquarter(complain.getHeadquarter());
-                    objcomplain.setmFirebaseDatabase(mFirebaseDatabase);
-
                     complaintList.add(objcomplain);
                 }
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                commentAdpter = new CommentAdpter(recyclerView,complaintList,getContext());
+                historyAdapter = new HistoryAdapter(recyclerView,complaintList,getContext());
                 recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(commentAdpter);
+                recyclerView.setAdapter(historyAdapter);
             }
 
             @Override

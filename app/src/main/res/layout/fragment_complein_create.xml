@@ -10,7 +10,7 @@
     <EditText
         android:id="@+id/edt_complain"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:gravity="top"
@@ -26,17 +26,31 @@
         tools:checked="false"
         android:layout_below="@+id/edt_complain"
         android:layout_alignStart="@+id/btn_picture"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="12dp"
         android:layout_toStartOf="@+id/btn_send_complain" />
 
     <TextView
         android:id="@+id/txt_photo_here"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btn_picture"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="22dp"
+        android:text="Sede"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/swt_privacy"
+        android:layout_below="@+id/swt_privacy"
+        android:layout_marginTop="15dp"
         android:text="Categoría"
-        android:textStyle="bold"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/swt_privacy" />
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView"
@@ -44,19 +58,19 @@
         android:layout_height="wrap_content"
         android:text="Adjunte Imagen"
         android:textStyle="bold"
+        android:layout_marginTop="12dp"
         android:layout_alignTop="@+id/btn_picture"
-        android:layout_toEndOf="@+id/txt_photo_here"
-        android:layout_marginTop="11dp" />
+        android:layout_toEndOf="@+id/textView2" />
 
     <ImageButton
         android:id="@+id/btn_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_photo_camera"
-        android:layout_marginStart="15dp"
-        android:layout_below="@+id/txt_sedes"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp" />
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/spn_sedes"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/img_photo"
@@ -79,29 +93,17 @@
     <Spinner
         android:id="@+id/spnCategorias"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/txt_photo_here"
-        android:layout_marginStart="11dp" />
+        android:layout_height="16sp"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toEndOf="@+id/swt_privacy"
+        android:layout_alignTop="@+id/textView2" />
 
-    <TextView
-        android:id="@+id/txt_sedes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sede"
-        android:textStyle="bold"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="6dp"
-        android:layout_alignStart="@id/txt_photo_here"
-        android:layout_below="@id/txt_photo_here" />
     <Spinner
         android:id="@+id/spn_sedes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/spnCategorias"
-        android:layout_toEndOf="@+id/txt_sedes"
-        android:layout_marginStart="11dp" />
+        android:layout_height="16sp"
+        android:layout_alignTop="@+id/txt_photo_here"
+        android:layout_alignStart="@+id/spnCategorias"
+        android:layout_alignBottom="@+id/txt_photo_here" />
 
 </RelativeLayout>

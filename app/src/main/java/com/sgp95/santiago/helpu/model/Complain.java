@@ -1,5 +1,8 @@
 package com.sgp95.santiago.helpu.model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Created by Hiraoka on 16/06/2017.
  */
@@ -13,10 +16,15 @@ public class Complain {
     private String Privacy;
     private String State;
     private String Category;
+    private String Headquarter;
+    private String Image;
+    private String FullName;
+    private DatabaseReference mFirebaseDatabase;
 
     public Complain(){}
     public Complain(String complain, String complainImage, String complaintId,
-                    String dateCreated, String userCode, String privacy, String state, String category) {
+                    String dateCreated, String userCode, String privacy, String state, String category, String headquarter,
+                    String userimg , String fullname, FirebaseDatabase mFirebaseDatabase) {
         Complain = complain;
         ComplainImage = complainImage;
         ComplaintId = complaintId;
@@ -25,6 +33,43 @@ public class Complain {
         Privacy = privacy;
         State = state;
         Category = category;
+        Headquarter = headquarter;
+        Image = userimg;
+        FullName = fullname;
+        mFirebaseDatabase = mFirebaseDatabase;
+    }
+
+
+    public DatabaseReference getmFirebaseDatabase() {
+        return mFirebaseDatabase;
+    }
+
+    public void setmFirebaseDatabase(DatabaseReference mFirebaseDatabase) {
+        this.mFirebaseDatabase = mFirebaseDatabase;
+    }
+
+    public String getHeadquarter() {
+        return Headquarter;
+    }
+
+    public void setHeadquarter(String headquarter) {
+        Headquarter = headquarter;
+    }
+
+    public String getFullName() {
+        return FullName;
+    }
+
+    public void setFullName(String fullName) {
+        FullName = fullName;
+    }
+
+    public String getUserImg() {
+        return Image;
+    }
+
+    public void setUserImg(String userImg) {
+        Image = userImg;
     }
 
     public String getCategory() {
