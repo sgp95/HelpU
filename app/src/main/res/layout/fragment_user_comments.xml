@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context="com.sgp95.santiago.helpu.UserCommentsFragment">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_send_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="@color/fab_red"
+        android:clickable="true"
+        android:src="@drawable/ic_send_black"
+        android:tint="@color/withe"
+        app:fabSize="mini" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_user_comments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/fab_send_comment"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/edt_user_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/fab_send_comment">
+
+        <EditText
+            android:id="@+id/input_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Comentario aqui..." />
+    </android.support.design.widget.TextInputLayout>
+
+
+</RelativeLayout>

@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sgp95.santiago.helpu.R;
 import com.sgp95.santiago.helpu.model.Complain;
@@ -39,7 +38,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.comment,parent,false);
+                .inflate(R.layout.complain,parent,false);
         return new ViewHolder(view);
     }
 
@@ -53,10 +52,10 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
         return complainList.size();
     }
 
-   /* public void setOnItemClickListener(MyItemClickListener listener) {
+    public void setOnItemClickListener(MyItemClickListener listener) {
         this.myItemClickListener = listener;
     }
-*/
+
     public class ViewHolder extends SelectableAdapter.ViewHolder {
 
         TextView userFullName, complain, dateCreated,info,hour;
@@ -71,6 +70,14 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
             dateCreated = (TextView) itemView.findViewById(R.id.txt_date);
             imgUser = (ImageView) itemView.findViewById(R.id.img_user);
             imgRequest = (ImageView) itemView.findViewById(R.id.img_complaint);
+            setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick() {
+                    if (myItemClickListener != null){
+                        myItemClickListener.onItemClick(complainList.get(getAdapterPosition()));
+                    }
+                }
+            });
 
         }
 

@@ -5,34 +5,46 @@ package com.sgp95.santiago.helpu.model;
  */
 
 public class Comment {
-    private String ID;
-    private String Username;
+    private String CommentId;
+    private String UserName;
+    private String UserCode;
     private String Comment;
+    private String CommentDate;
     private String image;
-
-    public Comment(String ID, String username, String comment, String image) {
-        this.ID = ID;
-        Username = username;
-        Comment = comment;
-        this.image = image;
-    }
 
     public Comment(){}
 
-    public String getID() {
-        return ID;
+    public Comment(String commentId, String username, String userCode, String comment, String commentDate, String image) {
+        CommentId = commentId;
+        UserName = username;
+        UserCode = userCode;
+        Comment = comment;
+        CommentDate = commentDate;
+        this.image = image;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public String getCommentId() {
+        return CommentId;
     }
 
-    public String getUsername() {
-        return Username;
+    public void setCommentId(String commentId) {
+        CommentId = commentId;
     }
 
-    public void setUsername(String username) {
-        Username = username;
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String username) {
+        UserName = username;
+    }
+
+    public String getUserCode() {
+        return UserCode;
+    }
+
+    public void setUserCode(String userCode) {
+        UserCode = userCode;
     }
 
     public String getComment() {
@@ -41,6 +53,14 @@ public class Comment {
 
     public void setComment(String comment) {
         Comment = comment;
+    }
+
+    public String getCommentDate() {
+        return CommentDate;
+    }
+
+    public void setCommentDate(String commentDate) {
+        CommentDate = commentDate;
     }
 
     public String getImage() {

@@ -3,6 +3,7 @@ package com.sgp95.santiago.helpu;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,13 +31,14 @@ import java.util.List;
  * Created by Hiraoka on 16/06/2017.
  */
 
-public class CommentsFragment extends Fragment {
+public class CommentsFragment extends Fragment implements CommentAdpter.MyItemClickListener {
     private RecyclerView recyclerView;
     private CommentAdpter commentAdpter;
     private List<Complain> complaintList;
-    //private NavigationView navigationView;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
+    private Bundle commentsData;
+    String userFullName, userImage, userCode;
 
 
 
@@ -62,7 +64,7 @@ public class CommentsFragment extends Fragment {
         complaintList = new ArrayList<>();
         final List<Complain> commentList;
 
-        String userCode = getArguments().getString("userCode");
+        final String userCode = getArguments().getString("userCode");
         Log.d("prueba", userCode);
 
 
@@ -70,6 +72,8 @@ public class CommentsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+                String fullName = user.getLastName()+ ", " + user.getFirstName();
+                setUserData(getArguments().getString("userCode"),fullName,user.getImage());
                 TextView userFullName = (TextView) getActivity().findViewById(R.id.user_name_header);
                 ImageView userImg = (ImageView) getActivity().findViewById(R.id.user_profile_img);
                 userFullName.setText(user.getLastName()+ ' ' + user.getFirstName());
@@ -86,10 +90,12 @@ public class CommentsFragment extends Fragment {
             }
         });
 
-
-        //final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference ref = database.getReference("complaint");
         complaintList = new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        commentAdpter = new CommentAdpter(recyclerView,complaintList,getContext());
+        commentAdpter.setOnItemClickListener(this);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(commentAdpter);
         mFirebaseDatabase.child("complaint").orderByChild("dateCreated").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
@@ -110,13 +116,17 @@ public class CommentsFragment extends Fragment {
                     objcomplain.setUserCode(complain.getUserCode());
                     objcomplain.setHeadquarter(complain.getHeadquarter());
                     objcomplain.setmFirebaseDatabase(mFirebaseDatabase);
+                    Log.d("ComplainAdapter",complain.getComplain()+"-> ID"+complain.getComplaintId());
 
                     complaintList.add(objcomplain);
+                    commentAdpter.notifyDataSetChanged();
                 }
+                /*
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 commentAdpter = new CommentAdpter(recyclerView,complaintList,getContext());
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setAdapter(commentAdpter);
+                */
             }
 
             @Override
@@ -143,5 +153,25 @@ public class CommentsFragment extends Fragment {
         });
 
 
+    }
+
+    public void setUserData(String userCode,String userFullName, String userImage){
+        this.userCode = userCode;
+        this.userFullName = userFullName;
+        this.userImage = userImage;
+    }
+
+    @Override
+    public void onItemClick(Complain complein) {
+        commentsData = new Bundle();
+        commentsData.putString("userFullname",userFullName);
+        commentsData.putString("userCode",userCode);
+        commentsData.putString("userImage",userImage);
+        commentsData.putString("commentId",complein.getComplaintId());
+        UserCommentsFragment userCommentsFragment = new UserCommentsFragment();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        userCommentsFragment.setArguments(commentsData);
+        ft.replace(R.id.content,userCommentsFragment);
+        ft.commit();
     }
 }
