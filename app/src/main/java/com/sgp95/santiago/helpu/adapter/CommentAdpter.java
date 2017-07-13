@@ -74,7 +74,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
                 @Override
                 public void onItemClick() {
                     if (myItemClickListener != null){
-                        myItemClickListener.onItemClick(complainList.get(getAdapterPosition()));
+                        myItemClickListener.onItemClick(complainList.get(getItemCount() - 1 - getAdapterPosition()));
                     }
                 }
             });

@@ -5,16 +5,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sgp95.santiago.helpu.adapter.UserCommentsAdapter;
@@ -62,6 +65,10 @@ public class UserCommentsFragment extends Fragment {
         userImage = getArguments().getString("userImage");
         complainId = getArguments().getString("commentId");
 
+        setRecyclerView();
+
+        updateCommentList();
+
         commentReference = mFirebaseDataBase.child("comment").child(complainId);
         Log.d("UserComment",userFullname+"---"+userCode+"---"+complainId);
 
@@ -97,13 +104,51 @@ public class UserCommentsFragment extends Fragment {
         commentReference.child(comment.getCommentId()).setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getActivity(),"envio exitoso",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"envio exitoso",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(),"envio Fallido",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"envio Fallido",Toast.LENGTH_SHORT).show();
                 Log.e("ErrorSentComment", "Upload Failed -> " + e);
+            }
+        });
+    }
+
+    public void setRecyclerView(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        userCommentsAdapter = new UserCommentsAdapter(recyclerView,commentList,getContext());
+        recyclerView.setAdapter(userCommentsAdapter);
+    }
+
+    public void updateCommentList(){
+        mFirebaseDataBase.child("comment").child(complainId).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Comment comment = dataSnapshot.getValue(Comment.class);
+                Log.d("listComments",comment.getCommentId()+" || "+comment.getComment()+" || "+comment.getUserCode());
+                commentList.add(comment);
+                userCommentsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

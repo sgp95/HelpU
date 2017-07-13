@@ -168,6 +168,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
         commentsData.putString("userCode",userCode);
         commentsData.putString("userImage",userImage);
         commentsData.putString("commentId",complein.getComplaintId());
+        Log.d("ComplainAdapter",complein.getComplaintId()+" --- "+complein.getComplain());
         UserCommentsFragment userCommentsFragment = new UserCommentsFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         userCommentsFragment.setArguments(commentsData);
