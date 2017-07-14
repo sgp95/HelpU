@@ -255,21 +255,21 @@ public class CreateCompleinFragment extends Fragment {
         comment.setHeadquarter(spnSedes.getSelectedItem().toString());
 
         complainRef.child(pushKey).setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                progressDialog.dismiss();
-                Toast.makeText(getActivity(),"Queja enviada satisfactoriamente",Toast.LENGTH_SHORT).show();
-                goToCommentsFragment(userCode);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-                Toast.makeText(getActivity(),"No se pudo enviar la queja",Toast.LENGTH_SHORT).show();
-                Log.e("ErrorSentComplain", "Upload Failed -> " + e);
-            }
-        });
-    }
+        @Override
+        public void onSuccess(Void aVoid) {
+            progressDialog.dismiss();
+            Toast.makeText(getActivity(),"Queja enviada satisfactoriamente",Toast.LENGTH_SHORT).show();
+            goToCommentsFragment(userCode);
+        }
+    }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception e) {
+            progressDialog.dismiss();
+            Toast.makeText(getActivity(),"No se pudo enviar la queja",Toast.LENGTH_SHORT).show();
+            Log.e("ErrorSentComplain", "Upload Failed -> " + e);
+        }
+    });
+}
 
     public void goToCommentsFragment(String userCode){
 

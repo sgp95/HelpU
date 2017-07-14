@@ -1,5 +1,6 @@
 package com.sgp95.santiago.helpu;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +26,10 @@ import com.sgp95.santiago.helpu.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by Hiraoka on 16/06/2017.
@@ -35,6 +39,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
     private RecyclerView recyclerView;
     private CommentAdpter commentAdpter;
     private List<Complain> complaintList;
+    private List<Complain> complaintListReverse;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private Bundle commentsData;
@@ -64,6 +69,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
         complaintList = new ArrayList<>();
         final List<Complain> commentList;
 
+
         final String userCode = getArguments().getString("userCode");
         Log.d("prueba", userCode);
 
@@ -76,10 +82,10 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
                 setUserData(getArguments().getString("userCode"),fullName,user.getImage());
                 TextView userFullName = (TextView) getActivity().findViewById(R.id.user_name_header);
                 ImageView userImg = (ImageView) getActivity().findViewById(R.id.user_profile_img);
-                userFullName.setText(user.getLastName()+ ' ' + user.getFirstName());
+                userFullName.setText(user.getLastName().toString() + ' ' + user.getFirstName().toString());
                 Picasso.with(getContext())
                         .load(user.getImage())
-                        .resize(300, 300)
+                        .resize(100, 100)
                         .into(userImg);
                 Log.d("prueba", "User name: " + user.getFirstName() + ", email " + user.getLastName());
             }
@@ -91,18 +97,30 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
         });
 
         complaintList = new ArrayList<>();
+        final ArrayList<Complain> complaintListReverse = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        commentAdpter = new CommentAdpter(recyclerView,complaintList,getContext());
+        commentAdpter = new CommentAdpter(recyclerView, complaintList,getContext());
         commentAdpter.setOnItemClickListener(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(commentAdpter);
+
+
+
+
+        final ProgressDialog mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Cargando Quejas");
+        mProgressDialog.show();
+
+
         mFirebaseDatabase.child("complaint").orderByChild("dateCreated").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+
+
                 Complain complain = dataSnapshot.getValue(Complain.class);
                 // System.out.println(dataSnapshot.getKey() + " was " + category.getName());
 
-                if(complain.getPrivacy().equals("Publico")) {
+                    if(complain.getPrivacy().equals("Publico")) {
 
                     final Complain objcomplain = new Complain();
 
@@ -116,10 +134,26 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
                     objcomplain.setUserCode(complain.getUserCode());
                     objcomplain.setHeadquarter(complain.getHeadquarter());
                     objcomplain.setmFirebaseDatabase(mFirebaseDatabase);
-                    Log.d("ComplainAdapter",complain.getComplain()+"-> ID"+complain.getComplaintId());
+
 
                     complaintList.add(objcomplain);
-                    commentAdpter.notifyDataSetChanged();
+                   //     ListIterator iter = complaintList.listIterator(complaintList.size());
+
+                     /*   Collections.sort(complaintList, new Comparator<Complain>() {
+                            @Override
+                            public int compare(Complain p1, Complain p2) {
+                                return new Integer(p1.getDateCreated()).compareTo(new Integer(p2.getDateCreated()));
+                            }
+                        });
+                        for (Complain lteam : complaintList) {
+                            complaintListReverse.add(objcomplain);
+                        } */
+
+                        if (dataSnapshot.exists()) {
+                            mProgressDialog.dismiss();
+                            commentAdpter.notifyDataSetChanged();
+                        }
+
                 }
                 /*
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -127,6 +161,8 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setAdapter(commentAdpter);
                 */
+                    mProgressDialog.dismiss();
+
             }
 
             @Override
@@ -146,7 +182,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                mProgressDialog.dismiss();
             }
 
             // ...

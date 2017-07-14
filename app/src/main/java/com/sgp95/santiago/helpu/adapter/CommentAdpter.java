@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,8 +17,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.sgp95.santiago.helpu.R;
 import com.sgp95.santiago.helpu.model.Complain;
 import com.sgp95.santiago.helpu.model.User;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -44,13 +48,16 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(complainList.get(getItemCount() - 1 - position));
+
+               holder.bind(complainList.get(position));
     }
+
 
     @Override
     public int getItemCount() {
         return complainList.size();
     }
+
 
     public void setOnItemClickListener(MyItemClickListener listener) {
         this.myItemClickListener = listener;
@@ -60,6 +67,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
         TextView userFullName, complain, dateCreated,info,hour;
         ImageView imgUser,imgRequest;
+        ProgressBar progressBar,progressBar3;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -68,8 +76,11 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
             userFullName = (TextView) itemView.findViewById(R.id.txt_fullname);
             complain = (TextView) itemView.findViewById(R.id.txt_complaint_area);
             dateCreated = (TextView) itemView.findViewById(R.id.txt_date);
+            progressBar = (ProgressBar)itemView.findViewById(R.id.progressBar2);
+            progressBar3 = (ProgressBar)itemView.findViewById(R.id.progressBar3);
             imgUser = (ImageView) itemView.findViewById(R.id.img_user);
             imgRequest = (ImageView) itemView.findViewById(R.id.img_complaint);
+
             setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick() {
@@ -82,11 +93,26 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
         }
 
         public void bind(Complain comment){
+
+
             if(!comment.getComplainImage().equals("null")) {
+
+                progressBar.setVisibility(View.VISIBLE);
                 Picasso.with(context)
                         .load(comment.getComplainImage())
-                        .into(imgRequest);
-                imgRequest.setVisibility(View.VISIBLE);
+                        .into(imgRequest, new Callback(){
+                                    @Override
+                                    public void onSuccess() {
+                                        progressBar.setVisibility(View.GONE);
+                                        imgRequest.setVisibility(View.VISIBLE);
+                                    }
+                                    @Override
+                                    public void onError() {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                        });
+
+
             }
 
             mFirebaseDatabase = comment.getmFirebaseDatabase();
@@ -94,9 +120,21 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
+                    progressBar3.setVisibility(View.VISIBLE);
                     Picasso.with(context)
                             .load(user.getImage())
-                            .into(imgUser);
+                            .into(imgUser, new Callback(){
+                                @Override
+                                public void onSuccess() {
+                                    progressBar3.setVisibility(View.GONE);
+                                    imgUser.setVisibility(View.VISIBLE);
+                                }
+                                @Override
+                                public void onError() {
+                                    progressBar3.setVisibility(View.GONE);
+                                }
+                            });
+
                     userFullName.setText(user.getLastName() + " " + user.getFirstName());
 
                 }

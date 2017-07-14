@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:backgroundTint="@color/fab_red"
+
         android:clickable="true"
-        android:src="@drawable/ic_send_black"
-        android:tint="@color/withe"
+        android:src="@drawable/ic_check"
+
         app:fabSize="mini" />
 
     <android.support.v7.widget.RecyclerView

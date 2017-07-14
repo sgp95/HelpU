@@ -19,15 +19,16 @@
 
     <Switch
         android:id="@+id/swt_privacy"
-        android:layout_width="wrap_content"
+        style="@style/SCBSwitch"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txt_photo_here"
+        android:layout_below="@+id/edt_complain"
+        android:layout_marginTop="12dp"
+        android:layout_toStartOf="@+id/btn_send_complain"
         android:checked="true"
         android:text="Publico"
-        tools:checked="false"
-        android:layout_below="@+id/edt_complain"
-        android:layout_alignStart="@+id/btn_picture"
-        android:layout_marginTop="12dp"
-        android:layout_toStartOf="@+id/btn_send_complain" />
+        tools:checked="false" />
 
     <TextView
         android:id="@+id/txt_photo_here"
@@ -58,9 +59,9 @@
         android:layout_height="wrap_content"
         android:text="Adjunte Imagen"
         android:textStyle="bold"
-        android:layout_marginTop="12dp"
-        android:layout_alignTop="@+id/btn_picture"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_alignBottom="@+id/btn_picture"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_marginBottom="13dp" />
 
     <ImageButton
         android:id="@+id/btn_picture"
@@ -74,21 +75,22 @@
 
     <ImageView
         android:id="@+id/img_photo"
-        android:src="@drawable/imageicon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_below="@id/btn_picture"
+        android:src="@drawable/imageicon"
         android:visibility="gone" />
+
     <Button
         android:id="@+id/btn_send_complain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="15dp"
-        android:text="Send Complain"
+        android:text="Enviar"
         android:textAllCaps="false"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="9dp" />
 
     <Spinner
         android:id="@+id/spnCategorias"
@@ -103,6 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="16sp"
         android:layout_alignTop="@+id/txt_photo_here"
+        android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/spnCategorias"
         android:layout_alignBottom="@+id/txt_photo_here" />
 

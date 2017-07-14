@@ -10,7 +10,9 @@
     <ImageView
         android:id="@+id/img_user"
         android:layout_width="60dp"
-        android:layout_height="60dp" />
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/txt_info"
@@ -61,7 +63,7 @@
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="60sp"
+        android:layout_height="30sp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/txt_solution">
 
@@ -75,10 +77,31 @@
     <ImageView
         android:id="@+id/img_complaint"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="300dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/scroll_view"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
         android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_solution"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:visibility="gone" />
 
 
