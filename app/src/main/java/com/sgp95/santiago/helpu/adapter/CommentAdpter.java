@@ -20,8 +20,6 @@ import com.sgp95.santiago.helpu.model.User;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
@@ -49,7 +47,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-               holder.bind(complainList.get(position));
+               holder.bind(complainList.get(getItemCount() - 1 - position));
     }
 
 

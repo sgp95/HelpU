@@ -26,10 +26,7 @@ import com.sgp95.santiago.helpu.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by Hiraoka on 16/06/2017.
@@ -85,7 +82,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
                 userFullName.setText(user.getLastName().toString() + ' ' + user.getFirstName().toString());
                 Picasso.with(getContext())
                         .load(user.getImage())
-                        .resize(100, 100)
+                        .resize(60, 60)
                         .into(userImg);
                 Log.d("prueba", "User name: " + user.getFirstName() + ", email " + user.getLastName());
             }
@@ -204,11 +201,14 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
         commentsData.putString("userCode",userCode);
         commentsData.putString("userImage",userImage);
         commentsData.putString("commentId",complein.getComplaintId());
-        Log.d("ComplainAdapter",complein.getComplaintId()+" --- "+complein.getComplain());
+        //Log.d("ComplainAdapter",complein.getComplaintId()+" --- "+complein.getComplain());
         UserCommentsFragment userCommentsFragment = new UserCommentsFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         userCommentsFragment.setArguments(commentsData);
+        userCommentsFragment.setUserComplain(complein);
+        //ft.add(R.id.content,userCommentsFragment);
         ft.replace(R.id.content,userCommentsFragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 }

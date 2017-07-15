@@ -6,25 +6,31 @@
     android:padding="8dp"
     tools:context="com.sgp95.santiago.helpu.UserCommentsFragment">
 
+    <include
+        android:id="@+id/include_complain"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        layout="@layout/complain" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_send_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-
         android:clickable="true"
-        android:src="@drawable/ic_check"
-
+        app:backgroundTint="@color/fab_red"
+        android:src="@drawable/ic_send_black"
         app:fabSize="mini" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="6dp"
         android:id="@+id/rv_user_comments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/fab_send_comment"/>
+        android:layout_above="@id/fab_send_comment"
+        android:layout_below="@id/include_complain"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/edt_user_comment"

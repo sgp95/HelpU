@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sgp95.santiago.helpu.adapter.UserCommentsAdapter;
 import com.sgp95.santiago.helpu.model.Comment;
+import com.sgp95.santiago.helpu.model.Complain;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +41,11 @@ public class UserCommentsFragment extends Fragment {
     private FloatingActionButton fabSend;
     private EditText edtComment;
     private Comment commentToSend;
+    private Complain complain;
+    private TextView userFullName, commentComplain, dateCreated,info,hour;
+    private ImageView imgUser,imgRequest;
+
+    private static final String ARG_USER_COMPLAIN = "userComplain";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +60,7 @@ public class UserCommentsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        //Log.d("userComplain",complain.getComplain());
         super.onViewCreated(view, savedInstanceState);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance().getReference();
@@ -58,12 +68,23 @@ public class UserCommentsFragment extends Fragment {
         fabSend = (FloatingActionButton) view.findViewById(R.id.fab_send_comment);
         edtComment = (EditText) view.findViewById(R.id.input_comment);
 
+        //Complain inside
+        info = (TextView) view.findViewById(R.id.txt_info);
+        hour = (TextView) view.findViewById(R.id.txt_hour);
+        userFullName = (TextView) view.findViewById(R.id.txt_fullname);
+        commentComplain = (TextView) view.findViewById(R.id.txt_complaint_area);
+        dateCreated = (TextView) view.findViewById(R.id.txt_date);
+        imgUser = (ImageView) view.findViewById(R.id.img_user);
+        imgRequest = (ImageView) view.findViewById(R.id.img_complaint);
+
         commentList = new ArrayList<>();
 
         userFullname = getArguments().getString("userFullname");
         userCode = getArguments().getString("userCode");
         userImage = getArguments().getString("userImage");
         complainId = getArguments().getString("commentId");
+
+        setCommentComplain(complain);
 
         setRecyclerView();
 
@@ -88,6 +109,8 @@ public class UserCommentsFragment extends Fragment {
                 commentToSend.setComment(userComment);
                 commentToSend.setCommentDate(commentDate);
                 sendComment(commentToSend);
+
+                edtComment.setText("");
             }
         });
 
@@ -151,5 +174,25 @@ public class UserCommentsFragment extends Fragment {
 
             }
         });
+    }
+
+    public void setCommentComplain(Complain complain){
+        if(!complain.getComplainImage().equals("null")){
+            Picasso.with(getContext())
+                    .load(complain.getComplainImage())
+                    .into(imgRequest);
+        }
+        Picasso.with(getContext())
+                .load(complain.getUserImg())
+                .into(imgUser);
+        info.setText(complain.getHeadquarter() + "/" + complain.getCategory());
+        hour.setText(complain.getDateCreated().substring(11,16));
+        commentComplain.setText(complain.getComplain());
+        dateCreated.setText(complain.getDateCreated().substring(0,11));
+        userFullName.setText(complain.getFullName());
+    }
+
+    public void setUserComplain(Complain complain){
+        this.complain = complain;
     }
 }
