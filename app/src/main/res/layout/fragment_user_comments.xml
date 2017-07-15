@@ -10,7 +10,9 @@
         android:id="@+id/include_complain"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        layout="@layout/complain" />
+        layout="@layout/complain"
+        android:layout_below="@+id/imageView4"
+        android:layout_alignParentStart="true" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_send_comment"
@@ -19,9 +21,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:clickable="true"
-        app:backgroundTint="@color/fab_red"
         android:src="@drawable/ic_send_black"
-        app:fabSize="mini" />
+        app:backgroundTint="@color/fab_red"
+        app:fabSize="mini"
+        app:rippleColor="@color/colorAccent" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="6dp"
@@ -46,6 +49,17 @@
             android:layout_height="wrap_content"
             android:hint="Comentario aqui..." />
     </android.support.design.widget.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="13dp"
+        android:visibility="gone"
+        app:srcCompat="@mipmap/ic_launcher_round" />
 
 
 </RelativeLayout>

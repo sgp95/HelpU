@@ -50,16 +50,18 @@ public class HistoryAdapter extends SelectableAdapter<HistoryAdapter.ViewHolder>
     }
 
     public class ViewHolder extends SelectableAdapter.ViewHolder {
-        TextView userCode, complain, dateCreated, state;
+        TextView userCode, complain, dateCreated, state,headquarter,timeCreated;
         ImageView imgUser,imgRequest;
 
         public ViewHolder(View itemView) {
             super(itemView);
             complain = (TextView) itemView.findViewById(R.id.txt_history_content);
+            timeCreated = (TextView) itemView.findViewById(R.id.txt_time_created);
             dateCreated = (TextView) itemView.findViewById(R.id.txt_date_created);
             imgUser = (ImageView) itemView.findViewById(R.id.img_user);
             imgRequest = (ImageView) itemView.findViewById(R.id.img_content_history);
             state = (TextView) itemView.findViewById(R.id.txt_state_title);
+            headquarter = (TextView) itemView.findViewById(R.id.text_headquarter_name);
         }
 
         public void bind(Complain comment){
@@ -70,9 +72,10 @@ public class HistoryAdapter extends SelectableAdapter<HistoryAdapter.ViewHolder>
                         .into(imgRequest);
                 imgRequest.setVisibility(View.VISIBLE);
             }
-
+            headquarter.setText(comment.getHeadquarter()+" / "+comment.getCategory());
             complain.setText(comment.getComplain());
-            dateCreated.setText(comment.getDateCreated());
+            dateCreated.setText(comment.getDateCreated().substring(0,10));
+            timeCreated.setText(comment.getDateCreated().substring(11,16));
             System.out.println("Estado " + comment.getState());
             String uri="";
             if(comment.getState().equals("Pendiente")){
@@ -98,8 +101,10 @@ public class HistoryAdapter extends SelectableAdapter<HistoryAdapter.ViewHolder>
         }
     }
 
+
     public interface MyItemClickListener {
         void onItemClick(Complain complein);
     }
+
 
 }

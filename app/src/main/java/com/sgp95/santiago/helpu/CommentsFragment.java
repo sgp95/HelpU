@@ -40,7 +40,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private Bundle commentsData;
-    String userFullName, userImage, userCode;
+    String userfullname, userImage, userCode;
 
 
 
@@ -79,7 +79,8 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
                 setUserData(getArguments().getString("userCode"),fullName,user.getImage());
                 TextView userFullName = (TextView) getActivity().findViewById(R.id.user_name_header);
                 ImageView userImg = (ImageView) getActivity().findViewById(R.id.user_profile_img);
-                userFullName.setText(user.getLastName().toString() + ' ' + user.getFirstName().toString());
+                userfullname = user.getLastName().toString() + ' ' + user.getFirstName().toString();
+                userFullName.setText(userfullname);
                 Picasso.with(getContext())
                         .load(user.getImage())
                         .resize(60, 60)
@@ -109,7 +110,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
         mProgressDialog.show();
 
 
-        mFirebaseDatabase.child("complaint").orderByChild("dateCreated").addChildEventListener(new ChildEventListener() {
+        mFirebaseDatabase.child("complaint").orderByChild("complainId").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
 
@@ -190,22 +191,25 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
     public void setUserData(String userCode,String userFullName, String userImage){
         this.userCode = userCode;
-        this.userFullName = userFullName;
+        this.userfullname = userFullName;
         this.userImage = userImage;
     }
 
     @Override
-    public void onItemClick(Complain complein) {
+    public void onItemClick(Complain complain) {
         commentsData = new Bundle();
-        commentsData.putString("userFullname",userFullName);
+        commentsData.putString("userFullname",userfullname);
         commentsData.putString("userCode",userCode);
         commentsData.putString("userImage",userImage);
-        commentsData.putString("commentId",complein.getComplaintId());
-        //Log.d("ComplainAdapter",complein.getComplaintId()+" --- "+complein.getComplain());
+        commentsData.putString("commentId",complain.getComplaintId());
+        commentsData.putString("category",complain.getCategory());
+        commentsData.putString("headquarter",complain.getHeadquarter());
+        commentsData.putString("complainImage",complain.getComplainImage());
+
         UserCommentsFragment userCommentsFragment = new UserCommentsFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         userCommentsFragment.setArguments(commentsData);
-        userCommentsFragment.setUserComplain(complein);
+        userCommentsFragment.setUserComplain(complain);
         //ft.add(R.id.content,userCommentsFragment);
         ft.replace(R.id.content,userCommentsFragment);
         ft.addToBackStack(null);

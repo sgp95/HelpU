@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sgp95.santiago.helpu.R;
 import com.sgp95.santiago.helpu.model.Comment;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -49,7 +51,7 @@ public class UserCommentsAdapter extends SelectableAdapter<UserCommentsAdapter.V
 
         ImageView userImageProfile;
         TextView  txtUserFullName, txtUserCode,txtUserComment,txtCommentDate;
-
+        ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
             userImageProfile = (ImageView)itemView.findViewById(R.id.img_user_comments_profile);
@@ -57,13 +59,26 @@ public class UserCommentsAdapter extends SelectableAdapter<UserCommentsAdapter.V
             txtUserCode = (TextView) itemView.findViewById(R.id.txt_user_comments_code);
             txtUserComment = (TextView) itemView.findViewById(R.id.txt_user_comments_comment);
             txtCommentDate = (TextView) itemView.findViewById(R.id.txt_user_comments_date);
+            progressBar = (ProgressBar)itemView.findViewById(R.id.progressBar5);
         }
 
         public void bind(Comment comment){
+
+            progressBar.setVisibility(View.VISIBLE);
             Picasso.with(context)
                     .load(comment.getImage())
-                    .resize(40,40)
-                    .into(userImageProfile);
+                    .into(userImageProfile, new Callback(){
+                        @Override
+                        public void onSuccess() {
+                            progressBar.setVisibility(View.GONE);
+                            userImageProfile.setVisibility(View.VISIBLE);
+                        }
+                        @Override
+                        public void onError() {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
+
             txtUserFullName.setText(comment.getUserName());
             txtUserCode.setText(comment.getUserCode());
             txtUserComment.setText(comment.getComment());

@@ -103,6 +103,8 @@ public class HistoryFragment extends Fragment {
                     objcomplain.setComplainImage(complain.getComplainImage());
                     objcomplain.setComplaintId(complain.getComplaintId());
                     objcomplain.setDateCreated(complain.getDateCreated());
+                    objcomplain.setHeadquarter(complain.getHeadquarter());
+                    objcomplain.setCategory(complain.getCategory());
                     objcomplain.setPrivacy(complain.getPrivacy());
                     objcomplain.setState(complain.getState());
                     objcomplain.setUserCode(complain.getUserCode());

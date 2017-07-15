@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.sgp95.santiago.helpu.adapter.UserCommentsAdapter;
 import com.sgp95.santiago.helpu.model.Comment;
 import com.sgp95.santiago.helpu.model.Complain;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -44,7 +46,7 @@ public class UserCommentsFragment extends Fragment {
     private Complain complain;
     private TextView userFullName, commentComplain, dateCreated,info,hour;
     private ImageView imgUser,imgRequest;
-
+    private ProgressBar progressBar,progressBar3;
     private static final String ARG_USER_COMPLAIN = "userComplain";
 
     @Override
@@ -76,7 +78,8 @@ public class UserCommentsFragment extends Fragment {
         dateCreated = (TextView) view.findViewById(R.id.txt_date);
         imgUser = (ImageView) view.findViewById(R.id.img_user);
         imgRequest = (ImageView) view.findViewById(R.id.img_complaint);
-
+        progressBar = (ProgressBar)view.findViewById(R.id.progressBar2);
+        progressBar3 = (ProgressBar)view.findViewById(R.id.progressBar3);
         commentList = new ArrayList<>();
 
         userFullname = getArguments().getString("userFullname");
@@ -84,12 +87,42 @@ public class UserCommentsFragment extends Fragment {
         userImage = getArguments().getString("userImage");
         complainId = getArguments().getString("commentId");
 
+
+
+        Picasso.with(getContext())
+                .load(getArguments().getString("complainImage"))
+                .into(imgRequest, new Callback(){
+                    @Override
+                    public void onSuccess() {
+                        progressBar3.setVisibility(View.GONE);
+                        imgRequest.setVisibility(View.VISIBLE);
+                    }
+                    @Override
+                    public void onError() {
+                        progressBar3.setVisibility(View.GONE);
+                    }
+                });
+
         setCommentComplain(complain);
 
         setRecyclerView();
 
         updateCommentList();
 
+        progressBar.setVisibility(View.VISIBLE);
+        Picasso.with(getContext())
+                .load(userImage)
+                .into(imgUser, new Callback(){
+                    @Override
+                    public void onSuccess() {
+                        progressBar.setVisibility(View.GONE);
+                        imgUser.setVisibility(View.VISIBLE);
+                    }
+                    @Override
+                    public void onError() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
         commentReference = mFirebaseDataBase.child("comment").child(complainId);
         Log.d("UserComment",userFullname+"---"+userCode+"---"+complainId);
 
