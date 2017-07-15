@@ -29,6 +29,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
     private List<Complain> complainList;
     private Context context;
     private DatabaseReference mFirebaseDatabase;
+    String fullname, msgcomplain,imgComplain;
 
     public CommentAdpter(RecyclerView recyclerView, List<Complain> complainList, Context context){
         super(recyclerView);
@@ -44,17 +45,6 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
-               holder.bind(complainList.get(getItemCount() - 1 - position));
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return complainList.size();
-    }
 
 
     public void setOnItemClickListener(MyItemClickListener listener) {
@@ -63,8 +53,8 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
     public class ViewHolder extends SelectableAdapter.ViewHolder {
 
-        TextView userFullName, complain, dateCreated,info,hour;
-        ImageView imgUser,imgRequest;
+        private TextView userFullName, complain, dateCreated,info,hour;
+        private ImageView imgUser,imgRequest;
         ProgressBar progressBar,progressBar3;
 
         public ViewHolder(View itemView) {
@@ -88,12 +78,31 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
                 }
             });
 
+
+
         }
+
+        /* Para que no se pierdan los datos
+
+        public TextView getUserFullName() {
+            return userFullName;
+        }
+
+        public TextView getComplain() {
+            return complain;
+        }
+
+        public ImageView getImgComplain() {
+            return imgRequest;
+        }
+
+        ///////*/
+
 
         public void bind(Complain comment){
 
 
-            if(!comment.getComplainImage().equals("null")) {
+            if(!comment.getComplainImage().equals("null") || !comment.getComplainImage().equals("") || !comment.getComplainImage().isEmpty() ) {
 
                 progressBar.setVisibility(View.VISIBLE);
                 Picasso.with(context)
@@ -134,6 +143,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
                             });
 
                     userFullName.setText(user.getLastName() + " " + user.getFirstName());
+                    fullname = user.getLastName() + " " + user.getFirstName();
 
                 }
 
@@ -147,11 +157,33 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
             info.setText(comment.getHeadquarter() + "/" + comment.getCategory());
 
-            complain.setText(comment.getComplain());
-            dateCreated.setText(comment.getDateCreated().substring(0,11));
+            complain.setText(comment.getComplain()); msgcomplain = comment.getComplain();
+            dateCreated.setText(comment.getDateCreated().substring(0,11).replace("-","/").replace("-","/").replace("-","/"));
             hour.setText(comment.getDateCreated().substring(11,16));
+
         }
     }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+            /*    holder.getUserFullName().setText(fullname);
+                holder.getComplain().setText(msgcomplain);
+
+
+                 Picasso.with(this.context)
+                .load(String.valueOf(holder.getImgComplain())) //*Carga la imagen.
+                //.placeholder(R.drawable.ic_cloud_off_red)
+                .into(holder.imgRequest); */
+        holder.bind(complainList.get(getItemCount() - 1 - position));
+        holder.getAdapterPosition();
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return complainList.size();
+    }
+
 
     public interface MyItemClickListener {
         void onItemClick(Complain complein);

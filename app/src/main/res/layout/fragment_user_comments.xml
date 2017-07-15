@@ -21,10 +21,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:clickable="true"
-        android:src="@drawable/ic_send_black"
-        app:backgroundTint="@color/fab_red"
+        android:src="@android:drawable/ic_menu_send"
+        app:backgroundTint="@color/colorPrimary"
         app:fabSize="mini"
-        app:rippleColor="@color/colorAccent" />
+        app:rippleColor="@color/common_google_signin_btn_text_dark_default" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="6dp"
@@ -32,8 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_above="@id/fab_send_comment"
-        android:layout_below="@id/include_complain"/>
+        android:layout_below="@id/include_complain"
+        android:layout_above="@+id/edt_user_comment" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/edt_user_comment"
@@ -47,7 +47,7 @@
             android:id="@+id/input_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Comentario aqui..." />
+            android:hint="Escribe un comentario..." />
     </android.support.design.widget.TextInputLayout>
 
     <ImageView

@@ -39,7 +39,7 @@ public class UserCommentsFragment extends Fragment {
     private List<Comment> commentList;
     private UserCommentsAdapter userCommentsAdapter;
     private DatabaseReference mFirebaseDataBase,commentReference;
-    String userFullname,userCode,userImage,complainId,userComment,commentDate,pushKey;
+    String fullnameuser,userCode,userImage,complainId,userComment,commentDate,pushKey;
     private FloatingActionButton fabSend;
     private EditText edtComment;
     private Comment commentToSend;
@@ -82,7 +82,7 @@ public class UserCommentsFragment extends Fragment {
         progressBar3 = (ProgressBar)view.findViewById(R.id.progressBar3);
         commentList = new ArrayList<>();
 
-        userFullname = getArguments().getString("userFullname");
+        fullnameuser = getArguments().getString("fullnameuser");
         userCode = getArguments().getString("userCode");
         userImage = getArguments().getString("userImage");
         complainId = getArguments().getString("commentId");
@@ -124,7 +124,7 @@ public class UserCommentsFragment extends Fragment {
                     }
                 });
         commentReference = mFirebaseDataBase.child("comment").child(complainId);
-        Log.d("UserComment",userFullname+"---"+userCode+"---"+complainId);
+        Log.d("UserComment",fullnameuser+"---"+userCode+"---"+complainId);
 
         fabSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +136,7 @@ public class UserCommentsFragment extends Fragment {
 
                 commentToSend = new Comment();
                 commentToSend.setCommentId(pushKey);
-                commentToSend.setUserName(userFullname);
+                commentToSend.setUserName(fullnameuser);
                 commentToSend.setUserCode(userCode);
                 commentToSend.setImage(userImage);
                 commentToSend.setComment(userComment);
@@ -222,7 +222,7 @@ public class UserCommentsFragment extends Fragment {
         hour.setText(complain.getDateCreated().substring(11,16));
         commentComplain.setText(complain.getComplain());
         dateCreated.setText(complain.getDateCreated().substring(0,11));
-        userFullName.setText(complain.getFullName());
+        userFullName.setText(fullnameuser);
     }
 
     public void setUserComplain(Complain complain){

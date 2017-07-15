@@ -19,4 +19,8 @@
         <item name="android:colorForeground">#42221f1f
         </item>
     </style>
+    <style name="Button1Style" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
 </resources>

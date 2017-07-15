@@ -11,33 +11,34 @@
         android:id="@+id/img_user"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/txt_info"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/img_user"
         android:text="info"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/img_user" />
 
     <TextView
         android:id="@+id/txt_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/txt_hour"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:text="date"
+        android:text="11/07/17"
         android:textSize="12sp" />
 
     <TextView
         android:id="@+id/txt_fullname"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_info"
         android:layout_toEndOf="@+id/img_user"
+        android:maxLines="2"
         android:text="User Code"
         android:textStyle="bold" />
 
@@ -45,10 +46,9 @@
         android:id="@+id/txt_hour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:text="24:00"
         android:layout_below="@+id/txt_date"
-        android:layout_marginEnd="24dp"
-        android:text="24:00" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/txt_solution"
@@ -103,6 +103,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txt_hour"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/txt_date"
+        app:srcCompat="@drawable/tiempo" />
 
 
 </RelativeLayout>

@@ -50,7 +50,7 @@ public class UserCommentsAdapter extends SelectableAdapter<UserCommentsAdapter.V
     public class ViewHolder extends SelectableAdapter.ViewHolder{
 
         ImageView userImageProfile;
-        TextView  txtUserFullName, txtUserCode,txtUserComment,txtCommentDate;
+        TextView  txtUserFullName, txtUserCode,txtUserComment,txtCommentDate,hour;
         ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -59,6 +59,7 @@ public class UserCommentsAdapter extends SelectableAdapter<UserCommentsAdapter.V
             txtUserCode = (TextView) itemView.findViewById(R.id.txt_user_comments_code);
             txtUserComment = (TextView) itemView.findViewById(R.id.txt_user_comments_comment);
             txtCommentDate = (TextView) itemView.findViewById(R.id.txt_user_comments_date);
+            hour = (TextView) itemView.findViewById(R.id.hourcomment);
             progressBar = (ProgressBar)itemView.findViewById(R.id.progressBar5);
         }
 
@@ -82,7 +83,8 @@ public class UserCommentsAdapter extends SelectableAdapter<UserCommentsAdapter.V
             txtUserFullName.setText(comment.getUserName());
             txtUserCode.setText(comment.getUserCode());
             txtUserComment.setText(comment.getComment());
-            txtCommentDate.setText(comment.getCommentDate());
+            txtCommentDate.setText(comment.getCommentDate().substring(0,11).replace("-","/").replace("-","/").replace("-","/"));
+            hour.setText(comment.getCommentDate().substring(11,16));
         }
     }
 }

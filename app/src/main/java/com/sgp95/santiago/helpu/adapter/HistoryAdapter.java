@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sgp95.santiago.helpu.R;
 import com.sgp95.santiago.helpu.model.Complain;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -52,6 +54,7 @@ public class HistoryAdapter extends SelectableAdapter<HistoryAdapter.ViewHolder>
     public class ViewHolder extends SelectableAdapter.ViewHolder {
         TextView userCode, complain, dateCreated, state,headquarter,timeCreated;
         ImageView imgUser,imgRequest;
+        ProgressBar loadhistory,loadhistory2;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -62,19 +65,38 @@ public class HistoryAdapter extends SelectableAdapter<HistoryAdapter.ViewHolder>
             imgRequest = (ImageView) itemView.findViewById(R.id.img_content_history);
             state = (TextView) itemView.findViewById(R.id.txt_state_title);
             headquarter = (TextView) itemView.findViewById(R.id.text_headquarter_name);
+            loadhistory = (ProgressBar) itemView.findViewById(R.id.load_history);
         }
 
         public void bind(Complain comment){
 
-            if(!comment.getComplainImage().equals("null")) {
+            if(!comment.getComplainImage().equals("null") || !comment.getComplainImage().equals("") || !comment.getComplainImage().isEmpty() ) {
+
+                loadhistory.setVisibility(View.VISIBLE);
                 Picasso.with(context)
                         .load(comment.getComplainImage())
-                        .into(imgRequest);
-                imgRequest.setVisibility(View.VISIBLE);
+                        .into(imgRequest, new Callback(){
+                            @Override
+                            public void onSuccess() {
+                                loadhistory.setVisibility(View.GONE);
+                                imgRequest.setVisibility(View.VISIBLE);
+                            }
+                            @Override
+                            public void onError() {
+                                loadhistory.setVisibility(View.GONE);
+                            }
+                        });
+
+
             }
+
+
+
+
+
             headquarter.setText(comment.getHeadquarter()+" / "+comment.getCategory());
             complain.setText(comment.getComplain());
-            dateCreated.setText(comment.getDateCreated().substring(0,10));
+            dateCreated.setText(comment.getDateCreated().substring(0,10).replace("-","/").replace("-","/").replace("-","/"));
             timeCreated.setText(comment.getDateCreated().substring(11,16));
             System.out.println("Estado " + comment.getState());
             String uri="";

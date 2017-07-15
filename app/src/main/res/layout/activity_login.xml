@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_google_signin_btn_text_dark_pressed"
     tools:context="com.sgp95.santiago.helpu.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="251dp"
         android:layout_height="match_parent"
+        android:layout_above="@+id/txt_login_code"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         app:layout_constraintHorizontal_bias="0.504"
@@ -19,29 +21,29 @@
         app:srcCompat="@drawable/logohelpu1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_above="@+id/txt_login_code" />
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/txt_login_code"
         android:layout_width="183dp"
         android:layout_height="43dp"
+        android:layout_above="@+id/txt_login_password"
+        android:layout_alignEnd="@+id/txt_login_password"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="0dp"
         android:ems="10"
         android:hint="correo universitario"
         android:inputType="textEmailAddress"
-        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/txt_login_password"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="@+id/txt_login_password"
-        android:layout_marginBottom="20dp"
-        android:layout_above="@+id/txt_login_password"
-        android:layout_alignEnd="@+id/txt_login_password" />
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <EditText
         android:id="@+id/txt_login_password"
         android:layout_width="178dp"
         android:layout_height="43dp"
+        android:layout_above="@+id/btn_login"
         android:layout_marginBottom="19dp"
         android:layout_marginLeft="8dp"
         android:ems="10"
@@ -55,52 +57,56 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        android:layout_above="@+id/btn_login"
         android:layout_alignStart="@+id/btn_login" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="42dp"
         android:layout_height="42dp"
-        app:srcCompat="@drawable/ic_login_code"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+        android:layout_alignBottom="@+id/txt_login_code"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="0dp"
         app:layout_constraintVertical_bias="0.537"
-        android:layout_alignBottom="@+id/txt_login_code"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_marginStart="18dp" />
+        app:srcCompat="@drawable/user"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="40dp"
         android:layout_height="44dp"
-        app:srcCompat="@drawable/ic_login_pass"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+        android:layout_alignStart="@+id/imageView2"
+        android:layout_alignTop="@+id/txt_login_password"
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        tools:layout_constraintLeft_creator="1"
         app:layout_constraintVertical_bias="0.656"
-        tools:layout_editor_absoluteX="92dp"
-        android:layout_alignTop="@+id/txt_login_password"
-        android:layout_alignStart="@+id/imageView2" />
+        app:srcCompat="@drawable/pwd"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_editor_absoluteX="92dp" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:background="?attr/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="33dp"
+        android:background="@android:color/holo_red_light"
         android:elevation="0dp"
+        android:fontFamily="sans-serif-smallcaps"
         android:shadowRadius="5"
         android:text="Ingresar"
         android:textAllCaps="false"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:theme="@style/Button1Style"
         android:typeface="normal"
         app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -109,11 +115,7 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginBottom="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
+        tools:layout_constraintTop_creator="1" />
 
 
 </RelativeLayout>

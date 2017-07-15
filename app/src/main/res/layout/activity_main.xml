@@ -18,12 +18,13 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:navigationIcon="@drawable/burger"/>
+            app:navigationIcon="@drawable/menu_hamburger"/>
 
         <RelativeLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@color/common_google_signin_btn_text_dark_pressed" />
 
     </LinearLayout>
 

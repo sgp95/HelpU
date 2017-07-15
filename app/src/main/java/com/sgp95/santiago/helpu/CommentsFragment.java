@@ -67,7 +67,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
         final List<Complain> commentList;
 
 
-        final String userCode = getArguments().getString("userCode");
+        userCode = getArguments().getString("userCode");
         Log.d("prueba", userCode);
 
 
@@ -198,7 +198,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
     @Override
     public void onItemClick(Complain complain) {
         commentsData = new Bundle();
-        commentsData.putString("userFullname",userfullname);
+        commentsData.putString("fullnameuser",userfullname);
         commentsData.putString("userCode",userCode);
         commentsData.putString("userImage",userImage);
         commentsData.putString("commentId",complain.getComplaintId());

@@ -1,56 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
     android:layout_margin="6dp"
-    android:background="@color/sub_btn_tick">
+    android:background="@color/sub_btn_tick"
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/img_user_comments_profile"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/ic_launcher"
+        android:layout_alignBottom="@+id/txt_user_comments_code"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/txt_user_comments_full_name"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="second name, first name"
-        android:layout_marginStart="8dp"
+        android:layout_alignBottom="@+id/imageView6"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/txt_user_comments_code"
+        android:text="fullname"
         android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_toEndOf="@id/img_user_comments_profile"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_user_comments_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/txt_user_comments_full_name"
-        android:text="11/07/17 14:42"/>
+        android:layout_alignParentTop="true"
+        android:text="11/07/17"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/txt_user_comments_code"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_user_comments_full_name"
         android:layout_marginStart="8dp"
         android:layout_marginTop="3dp"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:text="1420037"
         android:layout_toEndOf="@id/img_user_comments_profile"
-        android:layout_below="@id/txt_user_comments_full_name"/>
+        android:text="1420037"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/txt_user_comments_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="here is the full length comment made by the user"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/img_user_comments_profile"/>
+        android:layout_below="@+id/img_user_comments_profile"
+        android:maxLines="5"
+        android:text="here is the full length comment made by the user" />
 
     <ProgressBar
         android:id="@+id/progressBar5"
@@ -58,6 +62,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/txt_user_comments_comment"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/hourcomment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/txt_user_comments_date"
+        android:text="24:00" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/hourcomment"
+        android:layout_toStartOf="@+id/txt_user_comments_date"
+        app:srcCompat="@drawable/tiempo" />
 
 </RelativeLayout>
