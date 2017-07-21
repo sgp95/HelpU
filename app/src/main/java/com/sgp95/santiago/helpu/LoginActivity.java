@@ -16,11 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.spark.submitbutton.SubmitButton;
-
-import java.util.concurrent.ExecutionException;
-
-import static com.sgp95.santiago.helpu.R.id.btn_login;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         edtLoginCode = (EditText)findViewById(R.id.txt_login_code);
         edtLoginPass = (EditText)findViewById(R.id.txt_login_password);
-        btnLogin = (Button)findViewById(btn_login);
+        btnLogin = (Button)findViewById(R.id.btn_login);
 
         auth = FirebaseAuth.getInstance();
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     Toast.makeText(LoginActivity.this,"Login fallido verifique correo y contraseña",Toast.LENGTH_LONG).show();
                                 }else {
+                                    progressDialog.dismiss();
                                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
                                     finish();
