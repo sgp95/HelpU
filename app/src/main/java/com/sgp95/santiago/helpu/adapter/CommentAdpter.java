@@ -53,7 +53,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
     public class ViewHolder extends SelectableAdapter.ViewHolder {
 
-        private TextView userFullName, complain, dateCreated,info,hour;
+        private TextView userFullName, complain, dateCreated,info,hour,commentsCounter;
         private ImageView imgUser,imgRequest;
         ProgressBar progressBar,progressBar3;
 
@@ -68,6 +68,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
             progressBar3 = (ProgressBar)itemView.findViewById(R.id.progressBar3);
             imgUser = (ImageView) itemView.findViewById(R.id.img_user);
             imgRequest = (ImageView) itemView.findViewById(R.id.img_complaint);
+            commentsCounter = (TextView) itemView.findViewById(R.id.txt_comments_counter);
 
             setOnItemClickListener(new OnItemClickListener() {
                 @Override
@@ -82,26 +83,10 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
         }
 
-        /* Para que no se pierdan los datos
-
-        public TextView getUserFullName() {
-            return userFullName;
-        }
-
-        public TextView getComplain() {
-            return complain;
-        }
-
-        public ImageView getImgComplain() {
-            return imgRequest;
-        }
-
-        ///////*/
-
 
         public void bind(Complain comment){
 
-
+            //if(!imgComplain.equalsIgnoreCase("null")){
             if(!comment.getComplainImage().equals("null") || !comment.getComplainImage().equals("") || !comment.getComplainImage().isEmpty() ) {
 
                 progressBar.setVisibility(View.VISIBLE);
@@ -166,14 +151,6 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-            /*    holder.getUserFullName().setText(fullname);
-                holder.getComplain().setText(msgcomplain);
-
-
-                 Picasso.with(this.context)
-                .load(String.valueOf(holder.getImgComplain())) //*Carga la imagen.
-                //.placeholder(R.drawable.ic_cloud_off_red)
-                .into(holder.imgRequest); */
         holder.bind(complainList.get(getItemCount() - 1 - position));
         holder.getAdapterPosition();
     }

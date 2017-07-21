@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="@color/sub_btn_tick"
+    android:background="@color/complain_background"
     android:padding="8dp">
 
     <ImageView
@@ -18,10 +18,10 @@
         android:id="@+id/txt_info"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="info"
-        android:textSize="12sp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/img_user" />
+        android:layout_toEndOf="@+id/img_user"
+        android:text="info"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/txt_date"
@@ -46,9 +46,9 @@
         android:id="@+id/txt_hour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="24:00"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/txt_date"
-        android:layout_alignParentEnd="true" />
+        android:text="24:00" />
 
     <TextView
         android:id="@+id/txt_solution"
@@ -83,7 +83,7 @@
         android:adjustViewBounds="true"
         android:cropToPadding="false"
         android:src="@mipmap/ic_launcher"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -112,6 +112,24 @@
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/txt_date"
         app:srcCompat="@drawable/tiempo" />
+
+    <TextView
+        android:id="@+id/txt_plain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_complaint"
+        android:layout_alignParentEnd="true"
+        android:text="Comment(s)"/>
+    <TextView
+        android:id="@+id/txt_comments_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_below="@id/img_complaint"
+        android:layout_toStartOf="@id/txt_plain"
+        android:layout_marginRight="6dp"/>
 
 
 </RelativeLayout>

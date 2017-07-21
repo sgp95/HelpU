@@ -33,6 +33,7 @@ import java.util.List;
  */
 
 public class CommentsFragment extends Fragment implements CommentAdpter.MyItemClickListener {
+    private static final String TAG_TEST = "PruebaImagenes";
     private RecyclerView recyclerView;
     private CommentAdpter commentAdpter;
     private List<Complain> complaintList;
@@ -43,8 +44,6 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
     String userfullname, userImage, userCode;
 
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_comment,container,false);
+        return inflater.inflate(R.layout.fragment_comment, container, false);
     }
 
     @Override
@@ -75,8 +74,8 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                String fullName = user.getLastName()+ ", " + user.getFirstName();
-                setUserData(getArguments().getString("userCode"),fullName,user.getImage());
+                String fullName = user.getLastName() + ", " + user.getFirstName();
+                setUserData(getArguments().getString("userCode"), fullName, user.getImage());
                 TextView userFullName = (TextView) getActivity().findViewById(R.id.user_name_header);
                 ImageView userImg = (ImageView) getActivity().findViewById(R.id.user_profile_img);
                 userfullname = user.getLastName().toString() + ' ' + user.getFirstName().toString();
@@ -97,12 +96,10 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
         complaintList = new ArrayList<>();
         final ArrayList<Complain> complaintListReverse = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        commentAdpter = new CommentAdpter(recyclerView, complaintList,getContext());
+        commentAdpter = new CommentAdpter(recyclerView, complaintList, getContext());
         commentAdpter.setOnItemClickListener(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(commentAdpter);
-
-
 
 
         final ProgressDialog mProgressDialog = new ProgressDialog(getActivity());
@@ -116,15 +113,15 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
 
                 Complain complain = dataSnapshot.getValue(Complain.class);
-                // System.out.println(dataSnapshot.getKey() + " was " + category.getName());
 
-                    if(complain.getPrivacy().equals("Publico")) {
+                if (complain.getPrivacy().equals("Publico")) {
 
                     final Complain objcomplain = new Complain();
 
                     objcomplain.setCategory(complain.getCategory());
                     objcomplain.setComplain(complain.getComplain());
                     objcomplain.setComplainImage(complain.getComplainImage());
+                    Log.d(TAG_TEST,complain.getComplainImage());
                     objcomplain.setComplaintId(complain.getComplaintId());
                     objcomplain.setDateCreated(complain.getDateCreated());
                     objcomplain.setPrivacy(complain.getPrivacy());
@@ -135,31 +132,14 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
 
                     complaintList.add(objcomplain);
-                   //     ListIterator iter = complaintList.listIterator(complaintList.size());
 
-                     /*   Collections.sort(complaintList, new Comparator<Complain>() {
-                            @Override
-                            public int compare(Complain p1, Complain p2) {
-                                return new Integer(p1.getDateCreated()).compareTo(new Integer(p2.getDateCreated()));
-                            }
-                        });
-                        for (Complain lteam : complaintList) {
-                            complaintListReverse.add(objcomplain);
-                        } */
-
-                        if (dataSnapshot.exists()) {
-                            mProgressDialog.dismiss();
-                            commentAdpter.notifyDataSetChanged();
-                        }
+                    if (dataSnapshot.exists()) {
+                        mProgressDialog.dismiss();
+                        commentAdpter.notifyDataSetChanged();
+                    }
 
                 }
-                /*
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                commentAdpter = new CommentAdpter(recyclerView,complaintList,getContext());
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(commentAdpter);
-                */
-                    mProgressDialog.dismiss();
+                mProgressDialog.dismiss();
 
             }
 
@@ -189,7 +169,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
     }
 
-    public void setUserData(String userCode,String userFullName, String userImage){
+    public void setUserData(String userCode, String userFullName, String userImage) {
         this.userCode = userCode;
         this.userfullname = userFullName;
         this.userImage = userImage;
@@ -197,21 +177,21 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
     @Override
     public void onItemClick(Complain complain) {
+        Log.d(TAG_TEST,complain.getFullName()+" IMG:"+complain.getUserImg());
         commentsData = new Bundle();
-        commentsData.putString("fullnameuser",userfullname);
-        commentsData.putString("userCode",userCode);
-        commentsData.putString("userImage",userImage);
-        commentsData.putString("commentId",complain.getComplaintId());
-        commentsData.putString("category",complain.getCategory());
-        commentsData.putString("headquarter",complain.getHeadquarter());
-        commentsData.putString("complainImage",complain.getComplainImage());
+        commentsData.putString("fullnameuser", userfullname);
+        commentsData.putString("userCode", userCode);
+        commentsData.putString("userImage", userImage);
+        commentsData.putString("commentId", complain.getComplaintId());
+        commentsData.putString("category", complain.getCategory());
+        commentsData.putString("headquarter", complain.getHeadquarter());
+        commentsData.putString("complainImage", complain.getComplainImage());
 
         UserCommentsFragment userCommentsFragment = new UserCommentsFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         userCommentsFragment.setArguments(commentsData);
         userCommentsFragment.setUserComplain(complain);
-        //ft.add(R.id.content,userCommentsFragment);
-        ft.replace(R.id.content,userCommentsFragment);
+        ft.replace(R.id.content, userCommentsFragment);
         ft.addToBackStack(null);
         ft.commit();
     }

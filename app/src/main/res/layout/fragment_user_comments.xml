@@ -6,13 +6,35 @@
     android:padding="8dp"
     tools:context="com.sgp95.santiago.helpu.UserCommentsFragment">
 
-    <include
-        android:id="@+id/include_complain"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        layout="@layout/complain"
-        android:layout_below="@+id/imageView4"
-        android:layout_alignParentStart="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_above="@+id/edt_user_comment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/include_complain"
+                layout="@layout/complain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/imageView4" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_user_comments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/edt_user_comment"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/include_complain"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_send_comment"
@@ -25,15 +47,6 @@
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="mini"
         app:rippleColor="@color/common_google_signin_btn_text_dark_default" />
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="6dp"
-        android:id="@+id/rv_user_comments"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/include_complain"
-        android:layout_above="@+id/edt_user_comment" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/edt_user_comment"

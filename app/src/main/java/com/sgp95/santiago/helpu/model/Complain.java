@@ -19,6 +19,7 @@ public class Complain {
     private String Headquarter;
     private String Image;
     private String FullName;
+    private String comCounter;
     private DatabaseReference mFirebaseDatabase;
 
     public Complain(){}
@@ -136,5 +137,11 @@ public class Complain {
         State = state;
     }
 
+    public void setComCounter(String comCounter) {
+        this.comCounter = comCounter;
+    }
 
+    public String getComCounter() {
+        return comCounter;
+    }
 }

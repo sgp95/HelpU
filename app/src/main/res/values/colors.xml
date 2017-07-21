@@ -6,4 +6,5 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="fab_red">#b30b0b</color>
     <color name="withe">#ffffff</color>
+    <color name="complain_background">#fcaaaa</color>
 </resources>
