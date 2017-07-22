@@ -38,7 +38,7 @@ public class UserCommentsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Comment> commentList;
     private UserCommentsAdapter userCommentsAdapter;
-    private DatabaseReference mFirebaseDataBase,commentReference;
+    private DatabaseReference mFirebaseDataBase,commentReference,comCounterReference;
     String fullnameuser,userCode,userImage,complainId,userComment,commentDate,pushKey;
     private FloatingActionButton fabSend;
     private EditText edtComment;
@@ -124,6 +124,7 @@ public class UserCommentsFragment extends Fragment {
                     }
                 });
         commentReference = mFirebaseDataBase.child("comment").child(complainId);
+        comCounterReference = mFirebaseDataBase.child("complaint").child(complainId);
         Log.d("UserComment",fullnameuser+"---"+userCode+"---"+complainId);
 
         fabSend.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +161,7 @@ public class UserCommentsFragment extends Fragment {
         commentReference.child(comment.getCommentId()).setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                updateCommentCounter();
                 //Toast.makeText(getActivity(),"envio exitoso",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -227,5 +229,25 @@ public class UserCommentsFragment extends Fragment {
 
     public void setUserComplain(Complain complain){
         this.complain = complain;
+    }
+
+    public void updateCommentCounter(){
+        int counter = Integer.parseInt(complain.getComCounter());
+        //Log.d("CommentCounter",counter+"");
+        counter = counter+1;
+        //Log.d("CommentCounter",counter+"");
+        //Log.d("CommentCounter",String.valueOf(counter));
+        complain.setComCounter(String.valueOf(counter));
+        comCounterReference.child("comCounter").setValue(String.valueOf(counter)).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("CommentCounter","counter updated");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("CommentCounter", "Counter Update Failed -> " + e);
+            }
+        });
     }
 }

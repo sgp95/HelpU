@@ -256,6 +256,7 @@ public class CreateCompleinFragment extends Fragment {
         comment.setPrivacy(getPrivacyState());
         comment.setCategory(spnCategorias.getSelectedItem().toString());
         comment.setHeadquarter(spnSedes.getSelectedItem().toString());
+        comment.setComCounter("0");
 
         complainRef.child(pushKey).setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
         @Override

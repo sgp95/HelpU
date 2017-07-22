@@ -142,6 +142,7 @@ public class CommentAdpter extends SelectableAdapter<CommentAdpter.ViewHolder> {
 
             info.setText(comment.getHeadquarter() + "/" + comment.getCategory());
 
+            commentsCounter.setText(comment.getComCounter());
             complain.setText(comment.getComplain()); msgcomplain = comment.getComplain();
             dateCreated.setText(comment.getDateCreated().substring(0,11).replace("-","/").replace("-","/").replace("-","/"));
             hour.setText(comment.getDateCreated().substring(11,16));

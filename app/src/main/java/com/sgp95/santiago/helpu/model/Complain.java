@@ -25,7 +25,7 @@ public class Complain {
     public Complain(){}
     public Complain(String complain, String complainImage, String complaintId,
                     String dateCreated, String userCode, String privacy, String state, String category, String headquarter,
-                    String userimg , String fullname, FirebaseDatabase mFirebaseDatabase) {
+                    String userimg , String fullname,String comCounter, FirebaseDatabase mFirebaseDatabase) {
         Complain = complain;
         ComplainImage = complainImage;
         ComplaintId = complaintId;
@@ -37,6 +37,7 @@ public class Complain {
         Headquarter = headquarter;
         Image = userimg;
         FullName = fullname;
+        comCounter = comCounter;
         mFirebaseDatabase = mFirebaseDatabase;
     }
 

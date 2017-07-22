@@ -129,6 +129,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
                     objcomplain.setUserCode(complain.getUserCode());
                     objcomplain.setHeadquarter(complain.getHeadquarter());
                     objcomplain.setmFirebaseDatabase(mFirebaseDatabase);
+                    objcomplain.setComCounter(complain.getComCounter());
 
 
                     complaintList.add(objcomplain);
@@ -145,7 +146,9 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                //Log.d("ChildChanged",dataSnapshot.getValue()+"  Key:"+dataSnapshot.getKey());
+                Complain complain = dataSnapshot.getValue(Complain.class);
+                Log.d("ChildChanged",complain.getComCounter());
             }
 
             @Override
