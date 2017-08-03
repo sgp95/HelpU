@@ -77,13 +77,12 @@
     <ImageView
         android:id="@+id/img_complaint"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/scroll_view"
         android:adjustViewBounds="true"
         android:cropToPadding="false"
-        android:src="@mipmap/ic_launcher"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar2"

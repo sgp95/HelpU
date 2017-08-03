@@ -78,7 +78,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
                 setUserData(getArguments().getString("userCode"), fullName, user.getImage());
                 TextView userFullName = (TextView) getActivity().findViewById(R.id.user_name_header);
                 ImageView userImg = (ImageView) getActivity().findViewById(R.id.user_profile_img);
-                userfullname = user.getLastName().toString() + ' ' + user.getFirstName().toString();
+                userfullname = user.getLastName() + ' ' + user.getFirstName();//OJO
                 userFullName.setText(userfullname);
                 Picasso.with(getContext())
                         .load(user.getImage())
@@ -121,7 +121,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
                     objcomplain.setCategory(complain.getCategory());
                     objcomplain.setComplain(complain.getComplain());
                     objcomplain.setComplainImage(complain.getComplainImage());
-                    Log.d(TAG_TEST,complain.getComplainImage());
+                    //Log.d(TAG_TEST,complain.getComplainImage());
                     objcomplain.setComplaintId(complain.getComplaintId());
                     objcomplain.setDateCreated(complain.getDateCreated());
                     objcomplain.setPrivacy(complain.getPrivacy());
@@ -146,9 +146,20 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                //Log.d("ChildChanged",dataSnapshot.getValue()+"  Key:"+dataSnapshot.getKey());
+                int index = 0;
                 Complain complain = dataSnapshot.getValue(Complain.class);
-                Log.d("ChildChanged",complain.getComCounter());
+                for(Complain c:complaintList){
+                    if(c!=null && c.getComplaintId().equals(complain.getComplaintId())){
+                        try {
+                            Log.d("ChildChanged","Item Cambiado");
+                            complaintList.set(index,complain);
+                            commentAdpter.notifyDataSetChanged();
+                        }catch (Exception E){
+                            Log.e("ChildChanged","Error en el update");
+                        }
+                    }
+                    index= index+1;
+                }
             }
 
             @Override
@@ -180,7 +191,7 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
     @Override
     public void onItemClick(Complain complain) {
-        Log.d(TAG_TEST,complain.getFullName()+" IMG:"+complain.getUserImg());
+        Log.d("rastro",complain.getFullName()+" IMG:"+complain.getUserImg());
         commentsData = new Bundle();
         commentsData.putString("fullnameuser", userfullname);
         commentsData.putString("userCode", userCode);

@@ -23,9 +23,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sgp95.santiago.helpu.adapter.UserCommentsAdapter;
 import com.sgp95.santiago.helpu.model.Comment;
 import com.sgp95.santiago.helpu.model.Complain;
+import com.sgp95.santiago.helpu.model.User;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -38,7 +40,7 @@ public class UserCommentsFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Comment> commentList;
     private UserCommentsAdapter userCommentsAdapter;
-    private DatabaseReference mFirebaseDataBase,commentReference,comCounterReference;
+    private DatabaseReference mFirebaseDataBase,commentReference,comCounterReference,userReference;
     String fullnameuser,userCode,userImage,complainId,userComment,commentDate,pushKey;
     private FloatingActionButton fabSend;
     private EditText edtComment;
@@ -87,6 +89,8 @@ public class UserCommentsFragment extends Fragment {
         userImage = getArguments().getString("userImage");
         complainId = getArguments().getString("commentId");
 
+        userReference = mFirebaseDataBase.child("student").child(complain.getUserCode());
+
 
 
         Picasso.with(getContext())
@@ -125,7 +129,7 @@ public class UserCommentsFragment extends Fragment {
                 });
         commentReference = mFirebaseDataBase.child("comment").child(complainId);
         comCounterReference = mFirebaseDataBase.child("complaint").child(complainId);
-        Log.d("UserComment",fullnameuser+"---"+userCode+"---"+complainId);
+        Log.d("rastro",complain.getUserCode());
 
         fabSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,19 +216,31 @@ public class UserCommentsFragment extends Fragment {
     }
 
     public void setCommentComplain(Complain complain){
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                Picasso.with(getContext())
+                        .load(user.getImage())
+                        .into(imgUser);
+
+                userFullName.setText(user.getLastName() + ' ' + user.getFirstName());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         if(!complain.getComplainImage().equals("null")){
             Picasso.with(getContext())
                     .load(complain.getComplainImage())
                     .into(imgRequest);
         }
-        Picasso.with(getContext())
-                .load(complain.getUserImg())
-                .into(imgUser);
         info.setText(complain.getHeadquarter() + "/" + complain.getCategory());
         hour.setText(complain.getDateCreated().substring(11,16));
         commentComplain.setText(complain.getComplain());
         dateCreated.setText(complain.getDateCreated().substring(0,11));
-        userFullName.setText(fullnameuser);
     }
 
     public void setUserComplain(Complain complain){
