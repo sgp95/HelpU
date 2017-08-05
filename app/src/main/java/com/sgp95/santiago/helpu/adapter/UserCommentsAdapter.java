@@ -54,13 +54,13 @@ public class UserCommentsAdapter extends SelectableAdapter<UserCommentsAdapter.V
         ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
-            userImageProfile = (ImageView)itemView.findViewById(R.id.img_user_comments_profile);
-            txtUserFullName = (TextView) itemView.findViewById(R.id.txt_user_comments_full_name) ;
-            txtUserCode = (TextView) itemView.findViewById(R.id.txt_user_comments_code);
-            txtUserComment = (TextView) itemView.findViewById(R.id.txt_user_comments_comment);
-            txtCommentDate = (TextView) itemView.findViewById(R.id.txt_user_comments_date);
-            hour = (TextView) itemView.findViewById(R.id.hourcomment);
-            progressBar = (ProgressBar)itemView.findViewById(R.id.progressBar5);
+            userImageProfile = itemView.findViewById(R.id.img_user_comments_profile);
+            txtUserFullName = itemView.findViewById(R.id.txt_user_comments_full_name) ;
+            txtUserCode = itemView.findViewById(R.id.txt_user_comments_code);
+            txtUserComment = itemView.findViewById(R.id.txt_user_comments_comment);
+            txtCommentDate = itemView.findViewById(R.id.txt_user_comments_date);
+            hour = itemView.findViewById(R.id.hourcomment);
+            progressBar = itemView.findViewById(R.id.progressBar5);
         }
 
         public void bind(Comment comment){
@@ -87,4 +87,5 @@ public class UserCommentsAdapter extends SelectableAdapter<UserCommentsAdapter.V
             hour.setText(comment.getCommentDate().substring(11,16));
         }
     }
+
 }

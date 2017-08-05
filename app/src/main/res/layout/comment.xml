@@ -76,7 +76,7 @@
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="30dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignBottom="@+id/hourcomment"
         android:layout_toStartOf="@+id/txt_user_comments_date"
         app:srcCompat="@drawable/tiempo" />

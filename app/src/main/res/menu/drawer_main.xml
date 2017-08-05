@@ -9,7 +9,7 @@
             android:icon="@drawable/ic_comment"/>
         <item
             android:id="@+id/opt_make_complain"
-            android:title="Crear Solicitud"
+            android:title="Realizar Queja"
             android:icon="@drawable/ic_info_contacts"/>
         <item
             android:id="@+id/opt_history"

@@ -63,8 +63,6 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference();
 
-        //spnCategorias = view.findViewById(R.id.spn_search_categorias);
-        //spnSedes = view.findViewById(R.id.spn_search_sedes);
 
         recyclerView = view.findViewById(R.id.recycler_view_comment);
         complaintList = new ArrayList<>();
