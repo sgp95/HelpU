@@ -68,20 +68,20 @@ public class UserCommentsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance().getReference();
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_user_comments) ;
-        fabSend = (FloatingActionButton) view.findViewById(R.id.fab_send_comment);
-        edtComment = (EditText) view.findViewById(R.id.input_comment);
+        recyclerView =  view.findViewById(R.id.rv_user_comments) ;
+        fabSend = view.findViewById(R.id.fab_send_comment);
+        edtComment = view.findViewById(R.id.input_comment);
 
         //Complain inside
-        info = (TextView) view.findViewById(R.id.txt_info);
-        hour = (TextView) view.findViewById(R.id.txt_hour);
-        userFullName = (TextView) view.findViewById(R.id.txt_fullname);
-        commentComplain = (TextView) view.findViewById(R.id.txt_complaint_area);
-        dateCreated = (TextView) view.findViewById(R.id.txt_date);
-        imgUser = (ImageView) view.findViewById(R.id.img_user);
-        imgRequest = (ImageView) view.findViewById(R.id.img_complaint);
-        progressBar = (ProgressBar)view.findViewById(R.id.progressBar2);
-        progressBar3 = (ProgressBar)view.findViewById(R.id.progressBar3);
+        info = view.findViewById(R.id.txt_info);
+        hour = view.findViewById(R.id.txt_hour);
+        userFullName = view.findViewById(R.id.txt_fullname);
+        commentComplain =  view.findViewById(R.id.txt_complaint_area);
+        dateCreated = view.findViewById(R.id.txt_date);
+        imgUser = view.findViewById(R.id.img_user);
+        imgRequest = view.findViewById(R.id.img_complaint);
+        progressBar = view.findViewById(R.id.progressBar2);
+        progressBar3 = view.findViewById(R.id.progressBar3);
         commentList = new ArrayList<>();
 
         fullnameuser = getArguments().getString("fullnameuser");
