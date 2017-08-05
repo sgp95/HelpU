@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         private ProgressDialog progressDialog;
 
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(LoginActivity.this, "Validando Datos!!", "Espere unos segundos!!", true);
+            progressDialog = ProgressDialog.show(LoginActivity.this, "Validando Datos", "Espere unos segundos", true);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         }
 
