@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
         //get views from header
         View view = navigationView.getHeaderView(0);
-        imageuser = (ImageView) view.findViewById(R.id.user_profile_img);
-        TextView userCode = (TextView) view.findViewById(R.id.user_code_header);
-        TextView userFullName = (TextView) view.findViewById(R.id.user_name_header);
+        imageuser =  view.findViewById(R.id.user_profile_img);
+        TextView userCode = view.findViewById(R.id.user_code_header);
+        TextView userFullName = view.findViewById(R.id.user_name_header);
         userCode.setText(user.getEmail().substring(0,7));
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

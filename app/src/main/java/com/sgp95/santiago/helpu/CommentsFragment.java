@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sgp95.santiago.helpu.adapter.CommentAdpter;
-import com.sgp95.santiago.helpu.model.Category;
 import com.sgp95.santiago.helpu.model.Complain;
 import com.sgp95.santiago.helpu.model.User;
 import com.squareup.picasso.Picasso;
@@ -46,8 +44,6 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
     private Bundle commentsData;
     String userfullname, userImage, userCode;
     Spinner spnCategorias,spnSedes;
-    List<String> categories = null,headquarters = null;
-    ArrayAdapter<String> spnArrayAdapter;
 
 
     @Override
@@ -72,77 +68,11 @@ public class CommentsFragment extends Fragment implements CommentAdpter.MyItemCl
 
         recyclerView = view.findViewById(R.id.recycler_view_comment);
         complaintList = new ArrayList<>();
-        final List<Complain> commentList;
+        //final List<Complain> commentList;
 
 
         userCode = getArguments().getString("userCode");
         Log.d("prueba", userCode);
-
-        categories = new ArrayList<>();
-        mFirebaseDatabase.child("category").orderByChild("name").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Category category = dataSnapshot.getValue(Category.class);
-                categories.add(category.getName());
-                spnArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,categories);
-                spnArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spnCategorias.setAdapter(spnArrayAdapter);
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        headquarters = new ArrayList<>();
-        mFirebaseDatabase.child("headquarter").orderByChild("name").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Category category = dataSnapshot.getValue(Category.class);
-                headquarters.add(category.getName());
-                spnArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,headquarters);
-                spnArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spnSedes.setAdapter(spnArrayAdapter);
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
         mFirebaseDatabase.child("student").child(userCode).addListenerForSingleValueEvent(new ValueEventListener() {
